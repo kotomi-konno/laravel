@@ -11,9 +11,9 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
         {
-            path: '/task',
-            name: 'task',
-            component: () => import('./components/task/Task.vue'),
+            path: '/goal',
+            name: 'goal',
+            component: () => import('./components/goal/Goal.vue'),
         },
         {
             path: '/search',
@@ -24,6 +24,11 @@ const router = new VueRouter({
             path: '/user',
             name: 'user',
             component: () => import('./components/user/User.vue'),
+        },
+        {
+            path: '/calendar',
+            name: 'calendar',
+            component: () => import('./components/calendar/Calendar.vue'),
         },
     ]
 });

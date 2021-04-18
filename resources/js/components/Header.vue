@@ -1,7 +1,8 @@
 <template>
     <div class="header">
         <div class="header_nav">
-            <router-link to="/task">task</router-link>
+            <router-link to="/goal">goal</router-link>
+            <router-link to="/calendar">calendar</router-link>
             <router-link to="/search">search</router-link>
             <router-link to="/user">user</router-link>
         </div>
@@ -11,22 +12,25 @@
 <style scoped>
 .header {
     text-align: center;
-    background-color: #000066;
+    background-color:#07889b;
     margin-bottom: 50px;
 }
 .header_nav {
-    padding: 30px;
+    padding: 25px;
 }
 .header_nav a {
     color: white;
     text-decoration: none;
     font-size: 25px;
     margin-right: 25px;
+    padding-bottom: 5px;
 }
 .header_nav a:last-child {
     margin-right: 0;
 }
 .header_nav a.router-link-active {
-    color: #f3920b !important;
+    /* color: #f3920b !important; */
+    font-weight: bold;
+    border-bottom: 1px solid white;
 }
 </style>
