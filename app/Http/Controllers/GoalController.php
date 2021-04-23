@@ -22,7 +22,8 @@ class GoalController extends Controller
 
        public function read()
     {
-       $data = Goal::get();
+        // 降順に表示させる
+       $data = Goal::orderBy('created_at', 'desc')->get();
        return $data;
 
     //    return Goal::get(); でもいいよ！！

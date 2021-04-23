@@ -14,14 +14,15 @@ class GoalSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 10; $i++) {
-                Goal::create([
-                    'name' => '名前'.$i,
-                    'content' => '目標の内容' . $i,
-                    'deadline' => '2021-04-30',
-                    'time' => '30:00:00',
-                    'completed' => false
-                ]);
-            }
+        // for ($i = 1; $i <= 10; $i++) {
+        //         Goal::create([
+        //             'name' => '名前'.$i,
+        //             'content' => '目標の内容' . $i,
+        //             'deadline' => '2021-04-30',
+        //             'time' => '30:00:00',
+        //             'completed' => false
+        //         ]);
+        // }
+        factory(Goal::class, 100)->create();
     }
 }

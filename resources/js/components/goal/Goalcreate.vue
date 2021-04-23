@@ -42,7 +42,7 @@ export default {
                     this.newgoal.time = "";
                     this.newgoal.completed = false;
                     this.goalRead();
-                    router.push("/goal");
+                    this.$router.push("/goal");
                 });
             };
         },
