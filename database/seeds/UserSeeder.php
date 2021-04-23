@@ -12,14 +12,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 10; $i++) {
-                User::create([
-                    // 開発中は、初期ログインのためにこの表記を入れておく
-                    'name' => 'kotomi',
-                    'email' => 'kotomi.okawa@gmail.com',
-                    'password' => \Hash::make('test1234'),
-                ]);
-                factory(User::class, 30)->create();
-            }
+        User::create([
+            // 開発中は、初期ログインのためにこの表記を入れておく
+            'name' => 'kotomi',
+            'email' => 'kotomi.okawa@gmail.com',
+            'password' => \Hash::make('test1234'),
+            'level' => '2',
+        ]);
+        factory(User::class, 5)->create();
     }
 }

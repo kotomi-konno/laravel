@@ -16,6 +16,11 @@ const router = new VueRouter({
             component: () => import('./components/goal/Goal.vue'),
         },
         {
+            path: '/goalcreate',
+            name: 'goalcreate',
+            component: () => import('./components/goal/Goalcreate.vue'),
+        },
+        {
             path: '/search',
             name: 'search',
             component: () => import('./components/search/Search.vue'),
@@ -37,3 +42,23 @@ const app = new Vue({
     el: '#app',
     router
 });
+
+
+
+
+
+
+// routes: [
+//     {
+//         path: '/preview',
+//         children:[
+//             {
+//               path: '/',
+//               component: () => import('./components/molecules/PreviewList.vue'),
+//             },
+//             {
+//               path: 'list',
+//               component: () => import('./components/molecules/PreviewList.vue'),
+//         ]
+//     }
+//   ]

@@ -1,5 +1,7 @@
 <?php
 
+// シーダーはダミーデータを入れてるよ！
+
 use Illuminate\Database\Seeder;
 use App\Goal;
 
@@ -14,9 +16,11 @@ class GoalSeeder extends Seeder
     {
         for ($i = 1; $i <= 10; $i++) {
                 Goal::create([
-                    'name' => '名前番号' . $i,
+                    'name' => '名前'.$i,
                     'content' => '目標の内容' . $i,
-                    'target_time' => '3:00:00',
+                    'deadline' => '2021-04-30',
+                    'time' => '30:00:00',
+                    'completed' => false
                 ]);
             }
     }
