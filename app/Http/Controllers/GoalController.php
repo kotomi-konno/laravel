@@ -20,15 +20,16 @@ class GoalController extends Controller
         ]);
     }
 
-       public function read()
+       
+    public function read()
     {
         // 降順に表示させる
+        //    return Goal::get(); でもいいよ！！
        $data = Goal::orderBy('created_at', 'desc')->get();
        return $data;
-
-    //    return Goal::get(); でもいいよ！！
     }
-       public function update(Request $request)
+
+    public function update(Request $request)
     {
         Goal::where("id", $request->id)->update([
             'name' => $request->name,
@@ -38,8 +39,23 @@ class GoalController extends Controller
             'completed' => $request->completed,
         ]);
     }
-        public function delete($id)
+
+    public function delete($id)
     {
         Goal::where("id", $id)->delete();
+    }
+
+    public function search(Request $request)
+    {
+        $query = Goal::query()
+        ->orderBy('id', 'desc');
+
+        $query->where('completed','=', $request->completed);
+        if(isset($request->content)){
+            $query->where('content','like', "%".$request->content."%");
+        }
+
+        $data = $query->get();
+        return $data;
     }
 }

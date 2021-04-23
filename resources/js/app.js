@@ -1,5 +1,10 @@
 
 import VueRouter from 'vue-router';
+import Vuetify from 'vuetify';
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/dist/vuetify.min.css';
+
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -7,6 +12,7 @@ window.Vue = require('vue');
 
 Vue.component('app-component', require('./components/AppComponent.vue').default);
 
+Vue.use(Vuetify);
 Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
@@ -40,7 +46,8 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    vuetify: new Vuetify()
 });
 
 
