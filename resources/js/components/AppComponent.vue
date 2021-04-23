@@ -18,7 +18,8 @@ export default {
 button, input{
     border: 1px solid black;
     padding: 0 5px;
-    margin: 10px;
+    margin: 5px;
+    border-radius: 5px;
 }
 </style>
 
