@@ -1,6 +1,6 @@
 <template>
     <div class="goalComponent">
-        <router-link to="/goalcreate">目標登録</router-link>
+        <router-link to="/goalcreate">新しい目標を登録する</router-link>
 
         <div class="goalpage_inner">
             <h2>目標一覧</h2>
@@ -13,10 +13,12 @@
                         <input v-if="goal.edit" v-model="goal.content" type="text"><br>
 
                         締切日：<span v-if="!goal.edit">{{ goal.deadline }}</span>
-                        <input v-if="goal.edit" v-model="goal.deadline" type="text"><br>
+                        <input v-if="goal.edit" v-model="goal.deadline" type="date"><br>
 
                         目標時間：<span v-if="!goal.edit">{{ goal.time }}</span>
-                        <input v-if="goal.edit" v-model="goal.time" type="text"><br>
+                        <select v-if="goal.edit" v-model="goal.time">
+                            <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`">{{n}}:00</option>
+                        </select><br>
 
                         達成したかどうか：<input v-if="!goal.edit" type="checkbox" v-model="goal.completed" disabled>
                         <input v-if="goal.edit" type="checkbox" v-model="goal.completed">
@@ -29,6 +31,9 @@
                     </div>
                 </li>
             </ul>
+            <div v-show="isShow" class="pagination">
+                <v-pagination v-model="nowPage" :length="maxPages" @input="getNumber"></v-pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -37,17 +42,40 @@
 export default {
     data() {
         return {
+            isShow: false,
+            nowPage: 1,
+            maxPages: 0,
+            itemsNum: 1,
+            maxItems: 5,
+            goalDatas: [],
+
             goals: [],
         };
     },
     methods: {
         goalRead() {
             axios.get("/api/goal/read").then((res) => {
-                this.goals = res.data;
+                // this.goals = res.data;
+                this.goalDatas = res.data;
+                this.getNumber(1);
+                this.isShow = true;
+
                 this.goals.forEach((goal) => {
                     this.$set(goal, "edit", false);
                 });
             });
+        },
+        getNumber(page) {
+            let maxNum = this.goalDatas.length;
+            this.maxPages = Math.ceil(maxNum / this.maxItems);
+            this.goals.splice(0, this.goals.length);
+            for (let i = 0; i < this.maxItems; i++) {
+                if (i + this.maxItems * (page - 1) < maxNum - 1) {
+                    this.goals.push(
+                        this.goalDatas[i + this.maxItems * (page - 1)]
+                    );
+                }
+            }
         },
         goalUpdate(index) {
             this.goals[index].edit = false;
@@ -56,11 +84,11 @@ export default {
             });
         },
         goalDelete(id) {
-            if(confirm("この目標を削除しても良いですか？")){
+            if (confirm("この目標を削除しても良いですか？")) {
                 axios.delete("/api/goal/delete/" + id).then((res) => {
                     this.goalRead();
                 });
-            };
+            }
         },
         // createRead() {},
     },
@@ -85,8 +113,38 @@ export default {
                 justify-content: space-around;
                 padding: 15px 50px;
                 border-bottom: 1px dotted rgba(128, 128, 128, 0.552);
+                select {
+                    border: 1px solid;
+                    border-radius: 5px;
+                    width: 100px;
+                }
             }
         }
     }
+}
+
+.pagination{
+   max-width: 500px;
+   margin: 20px auto;
+//    margin-bottom: 15px;
+   nav ::v-deep .v-pagination{
+       &__item{
+           color: #000066;
+           border: 1px solid #000066;
+           &--active{
+               color: white;
+               background-color: #000066;
+           }
+       }
+       &__navigation{
+           border: 1px solid #000066;
+           .theme--light.v-icon{
+               color: #000066;
+           }
+           &--disabled{
+               opacity: 0.3;
+           }
+       }
+   }
 }
 </style>
