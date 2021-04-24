@@ -12,6 +12,7 @@ $factory->define(Goal::class, function (Faker $faker) {
         'deadline' => $faker->date,
         'time' => $faker->time,
         'completed' => $faker->boolean,
+        'users_id' => $faker->numberBetween(1,30),
     ];
 });
 

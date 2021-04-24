@@ -20,6 +20,7 @@ class CreateGoalsTable extends Migration
             $table->date('deadline');
             $table->time('time');
             $table->boolean('completed');
+            $table->integer('users_id');
             $table->timestamps();
         });
     }
