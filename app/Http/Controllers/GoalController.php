@@ -28,11 +28,12 @@ class GoalController extends Controller
         // 降順に表示させる
         //    return Goal::get(); でもいいよ！！
        $datas = Goal::orderBy('created_at', 'desc')->get();
-    //   ↓リレーション
+        //   ↓リレーション
        foreach($datas as $data){
            $data->users_name = User::find($data->users_id)->name;
        }
        return $datas;
+        // return User::find($data->users_id);
     }
 
     public function update(Request $request)
