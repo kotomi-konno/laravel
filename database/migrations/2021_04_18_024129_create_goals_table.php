@@ -15,12 +15,12 @@ class CreateGoalsTable extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->integer('users_id')->nullable();
+            // $table->string('name')->nullable();
             $table->string('content');
             $table->date('deadline');
             $table->time('time');
             $table->boolean('completed');
-            $table->integer('users_id');
             $table->timestamps();
         });
     }

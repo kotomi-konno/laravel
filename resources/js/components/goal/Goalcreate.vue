@@ -1,10 +1,13 @@
 <template>
     <div class="goalComponent">
         <h2>目標登録画面</h2>
+
         <hr>
 
         <form @submit.prevent="goalCreate">
             <div>
+                <p>ユーザーID：{{ newgoal.users_id }}</p>
+                <p>ユーザーネーム：{{ newgoal.users_name }}</p>
                 取り組む内容：<input type="text" v-model="newgoal.content"><br>
                 締切日：<input type="date" v-model="newgoal.deadline"><br>
                 目標時間：
@@ -25,13 +28,15 @@ export default {
     data() {
         return {
             newgoal: {
-                name: "",
+                users_id: 0,
+                users_name: "",
                 content: "",
                 deadline: "",
                 time: "",
                 completed: false,
             },
             goals: [],
+            // user: {},
         };
     },
     methods: {
@@ -53,9 +58,17 @@ export default {
                 this.goals = res.data;
             });
         },
+        getLoginUser() {
+            axios.get("/api/loginuser").then((res) => {
+                console.log(res.data);
+                this.newgoal.users_id = res.data.id;
+                this.newgoal.users_name = res.data.name;
+            });
+        },
     },
     mounted() {
         this.goalRead();
+        this.getLoginUser();
     },
 };
 </script>
@@ -75,7 +88,7 @@ export default {
             border-radius: 5px;
             display: block;
             margin: 0 auto;
-            margin-top:  20px;
+            margin-top: 20px;
         }
     }
 }

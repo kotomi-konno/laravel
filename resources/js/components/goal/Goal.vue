@@ -8,7 +8,7 @@
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
                     <div class="goalpage_inner_main">
-                        ユーザー：<span>{{ goal.name }}</span><br>
+                        ユーザー：<span>{{ goal.users_name }}</span><br>
                         内容：<span v-if="!goal.edit">{{ goal.content }}</span>
                         <input v-if="goal.edit" v-model="goal.content" type="text"><br>
 
@@ -90,7 +90,6 @@ export default {
                 });
             }
         },
-        // createRead() {},
     },
     mounted() {
         this.goalRead();

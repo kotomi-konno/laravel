@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Goal;
+use App\User;
 
 
 class GoalController extends Controller
@@ -12,7 +13,8 @@ class GoalController extends Controller
     {
         // return $request->completed;
         Goal::create([
-            'name' => $request->name,
+            'users_id' => $request->users_id,
+            // 'name' => $request->name,
             'content' => $request->content,
             'deadline' => $request->deadline,
             'time' => $request->time,
@@ -25,14 +27,18 @@ class GoalController extends Controller
     {
         // 降順に表示させる
         //    return Goal::get(); でもいいよ！！
-       $data = Goal::orderBy('created_at', 'desc')->get();
-       return $data;
+       $datas = Goal::orderBy('created_at', 'desc')->get();
+    //   ↓リレーション
+       foreach($datas as $data){
+           $data->users_name = User::find($data->users_id)->name;
+       }
+       return $datas;
     }
 
     public function update(Request $request)
     {
         Goal::where("id", $request->id)->update([
-            'name' => $request->name,
+            'users_id' => $request->users_id,
             'content' => $request->content,
             'deadline' => $request->deadline,
             'time' => $request->time,
