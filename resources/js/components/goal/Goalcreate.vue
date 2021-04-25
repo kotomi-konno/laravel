@@ -18,7 +18,7 @@
             <button>登録</button>
         </form>
 
-        <pre>{{$data}}</pre>
+        <!-- <pre>{{$data}}</pre> -->
 
     </div>
 </template>
@@ -79,8 +79,8 @@ export default {
         text-align: center;
     }
     form {
-        padding: 15px 50px;
-        width: 48%;
+        padding: 15px ;
+        // width: 48%;
         margin: 0 auto;
         button {
             border: 1px solid black;

@@ -8,7 +8,7 @@
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
                     <div class="goalpage_inner_main">
-                        ユーザー：<span>{{ goal.users_name }}</span><br>
+                        ユーザー：<span>{{ goal.users_name }}（ID：{{goal.users_id}}）</span><br>
                         内容：<span v-if="!goal.edit">{{ goal.content }}</span>
                         <input v-if="goal.edit" v-model="goal.content" type="text"><br>
 
@@ -16,8 +16,8 @@
                         <input v-if="goal.edit" v-model="goal.deadline" type="date"><br>
 
                         目標時間：<span v-if="!goal.edit">{{ goal.time }}</span>
-                        <select v-if="goal.edit" v-model="goal.time">
-                            <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`">{{n}}:00</option>
+                        <select v-if="goal.edit" v-model="goal.time" >
+                            <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`" >{{n}}:00</option>
                         </select><br>
 
                         達成したかどうか：<input v-if="!goal.edit" type="checkbox" v-model="goal.completed" disabled>

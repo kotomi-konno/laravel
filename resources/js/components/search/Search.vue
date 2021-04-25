@@ -2,14 +2,16 @@
     <div class="searchComponent">
         <h2>検索画面</h2>
         <form @submit.prevent="goalSearch">
+            ユーザー：<input v-model="search.usersName" type="text"><br>
+            内容：<input v-model="search.content" type="text"><br>
             達成したかどうか：<input v-model="search.completed" type="checkbox"><br>
-            内容：<input v-model="search.content" type="text">
             <button>search</button>
         </form>
 
         <hr>
         <ul>
             <li v-for="(goal, index) in goals" :key="index">
+                ユーザー：<span>{{goal.users_id}}</span><br>
                 達成したかどうか：<input type="checkbox" v-model="goal.completed" disabled='disabled'><br>
                 内容：<span :class="{red:goal.completed}">{{goal.content}}</span>
             </li>
@@ -33,6 +35,7 @@ export default {
             maxItems: 5,
             goalDatas: [],
             search: {
+                usersName: "",
                 content: "",
                 completed: false,
             },
