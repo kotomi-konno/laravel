@@ -8,8 +8,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+// goal
 Route::post('/goal/create', 'GoalController@create');
 Route::get('/goal/read', 'GoalController@read');
 Route::put('/goal/update', 'GoalController@update');
 Route::delete('/goal/delete/{id}', 'GoalController@delete');
 Route::post('/goal/search', 'GoalController@search');
+
+
+// action
+Route::get('/action/read', 'ActionController@read');

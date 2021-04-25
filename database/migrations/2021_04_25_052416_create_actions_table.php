@@ -15,10 +15,10 @@ class CreateActionsTable extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->id();
-            $table->integer('users_id')->nullable();
-            $table->integer('goals_id');
             $table->date('done_date');
             $table->time('done_time');
+            $table->integer('users_id')->nullable();
+            $table->integer('goals_id');
             $table->timestamps();
         });
     }
