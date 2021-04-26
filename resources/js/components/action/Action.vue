@@ -26,6 +26,15 @@
             </ul>
 
             <!-- 日付表示 -->
+            <ul class="content">
+                <li v-for="(week, index) in calendars" :key="index" >
+                    <ul>
+                        <li v-for="(day, index) in week" :key="index">
+                            {{ day.date }}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
         </form>
         <!-- カレンダー↑↑↑↑ -->
@@ -42,8 +51,6 @@ export default {
         return {
             year: 0,
             month: 0,
-            // startDate: 0,
-            // endDate: 0,
 
             actions: [],
         };
@@ -53,6 +60,14 @@ export default {
             this.year = this.$route.params.year;
             this.month = this.$route.params.month;
         },
+        actionRead() {
+            axios.get("/api/action/read").then((res) => {
+                // console.log(res.data);
+                this.actions = res.data;
+            });
+        },
+
+        // カレンダー作成
         getStartDate() {
             let date = moment().startOf("month");
             const youbiNum = date.day();
@@ -63,19 +78,35 @@ export default {
             const youbiNum = date.day();
             return date.add(7 - youbiNum, "days");
         },
+        getCalendar() {
+            let startDate = this.getStartDate();
+            const endDate = this.getEndDate();
+            const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
+            // ↑週数を取得
 
-        actionRead() {
-            axios.get("/api/action/read").then((res) => {
-                // console.log(res.data);
-                this.actions = res.data;
-            });
+            let calendars = [];
+            for (let week = 0; week < weekNumber; week++) {
+                let weekRow = [];
+                for (let day = 0; day < 7; day++) {
+                    weekRow.push({
+                        date: startDate.get("date"),
+                    });
+                    startDate.add(1, "days");
+                }
+                calendars.push(weekRow);
+            }
+            return calendars;
         },
     },
     mounted() {
         this.getDate();
         this.actionRead();
-        console.log(this.getStartDate());
-        console.log(this.getEndDate());
+        console.log(this.getCalendar());
+    },
+    computed: {
+        calendars() {
+            return this.getCalendar();
+        },
     },
     watch: {
         $route: "getDate",
@@ -128,4 +159,26 @@ form {
         }
     }
 }
+.content{
+    // max-width:900px;
+    border-top:1px solid grey;
+    li{
+        list-style: none;
+        // border-left:1px solid grey;
+        ul{
+            display: flex;
+            li{
+                flex:1;
+                min-height:125px;
+                border-left:1px solid grey;
+                border-bottom:1px solid grey;
+                padding: 5px 3px 3px 5px;
+                &:nth-child(7n) {
+                border-right: 1px solid grey;
+                }
+            }
+        }
+    }
+}
+
 </style>
