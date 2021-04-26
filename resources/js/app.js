@@ -37,10 +37,15 @@ const router = new VueRouter({
             component: () => import('./components/user/User.vue'),
         },
         {
-            path: '/calendar',
-            name: 'calendar',
-            component: () => import('./components/calendar/Calendar.vue'),
+            path: '/action/:year/:month',
+            name: 'action',
+            component: () => import('./components/action/Action.vue')
         },
+        {
+            path: '/action',
+            redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
+        },
+
     ]
 });
 
