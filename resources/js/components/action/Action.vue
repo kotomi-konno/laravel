@@ -4,11 +4,11 @@
 
         <!-- ページャー -->
         <div class="pager">
-            <router-link v-if="month == 1"  :to="`/action/${Number(year)-1}/12`">＜</router-link>
-            <router-link v-if="month != 1"  :to="`/action/${year}/${Number(month)-1}`">＜</router-link>
+            <router-link v-if="month == 1" :to="`/action/${Number(year)-1}/12`">＜</router-link>
+            <router-link v-if="month != 1" :to="`/action/${year}/${Number(month)-1}`">＜</router-link>
             <h3 class="cmn_pageTitle">{{ year }}年 {{ month }}月</h3>
-            <router-link v-if="month == 12"  :to="`/action/${Number(year)+1}/1`">＞</router-link>
-            <router-link v-if="month != 12"  :to="`/action/${year}/${Number(month)+1}`">＞</router-link>
+            <router-link v-if="month == 12" :to="`/action/${Number(year)+1}/1`">＞</router-link>
+            <router-link v-if="month != 12" :to="`/action/${year}/${Number(month)+1}`">＞</router-link>
         </div>
 
         <!-- カレンダー作成 -->
@@ -25,15 +25,15 @@
             </ul>
 
             <!-- 日付表示 -->
-            <!-- <ul class="content">
-                <li class="content_item blank"></li>
+            <ul class="content">
+                <li v-for="(n,index) in first_cnt" :key="index" class="content_item blank"></li>
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main">
-                    <span class="content_item_d"></span>
+                    <span class="content_item_d">{{ calendar.date|dateformat }}</span>
                 </li>
 
-                <li class="content_item blank"></li>
-            </ul> -->
+                <li v-for="(n,index) in last_cnt" :key="index" class="content_item blank"></li>
+            </ul>
 
         </div>
         <!-- カレンダー↑↑↑↑ -->
@@ -52,9 +52,10 @@ export default {
             year: 0,
             month: 0,
             actions: [],
-            // calendars: [],
+            calendars: [],
             first_cnt: 0,
             last_cnt: 0,
+            lastday: 0,
         };
     },
     methods: {
@@ -69,25 +70,44 @@ export default {
         },
 
         // カレンダー作成
-        // ①最初と最後の空欄の数を求める
-        getCalendar(){
-            this.first_cnt = moment().startOf('month').day() -1; 
-            this.last_cnt =(7-(moment().endOf('month').day()))%7; 
-            console.log(this.first_cnt);
-            console.log(this.last_cnt);
-        },
+        getCalendar() {
+            // ①最終日の日付を求める
+            this.lastday = moment().endOf("month").date();
+            console.log(this.lastday);
+            // ②最初と最後の空欄の数を求める
+            this.first_cnt = moment().startOf("month").day() - 1;
+            this.last_cnt = (7 - moment().endOf("month").day()) % 7;
+            // ③配列calendarsの中身を一旦空にする
+            this.calendars.splice(0, this.calendars.length);
+            // ④配列の中身を追加する
+            for (let i = 0; i < this.lastday; i++) {
+                this.calendars.push({
+                    date:
+                        this.year +
+                        "-" +
+                        ("00" + this.month).slice(-2) +
+                        "-" +
+                        ("00" + Number(i + 1)).slice(-2),
+                });
+            }
 
+        },
     },
     mounted() {
         this.getDate();
         this.actionRead();
         this.getCalendar();
-
     },
 
     watch: {
         $route: "getDate",
     },
+    filters: {
+        dateformat: function(date){
+            return moment(date).format("D")
+        }
+    }
+    
 };
 </script>
 
@@ -122,6 +142,7 @@ form {
 // 曜日表示
 .indent {
     display: flex;
+    margin-bottom: 0;
     &_item {
         // 100%の幅を7等分にした幅のこと
         width: calc(100% / 7);
@@ -136,6 +157,42 @@ form {
         }
     }
 }
-
-
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    &_item {
+        list-style: none;
+        width: calc(100% / 7);
+        height: 100px;
+        padding: 8px 5px 5px;
+        border-left: 1px solid grey;
+        border-bottom: 1px solid grey;
+        &:nth-child(7n-1) {
+            span {
+                color: blue;
+            }
+        }
+        &:nth-child(7n) {
+            border-right: 1px solid grey;
+            span {
+                color: red;
+            }
+        }
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4),
+        &:nth-child(5),
+        &:nth-child(6),
+        &:nth-child(7) {
+            border-top: 1px solid grey;
+        }
+        &.main {
+            font-size: 13px;
+        }
+        &.blank {
+            background-color: rgb(213, 213, 213);
+        }
+    }
+}
 </style>
