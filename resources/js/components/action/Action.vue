@@ -26,7 +26,7 @@
 
             <!-- 日付表示 -->
             <ul class="content">
-                <li v-for="(n,index) in first_cnt" :key="index" class="content_item blank"></li>
+                <li v-for="(n,index) in first_cnt" :key="index+100" class="content_item blank"></li>
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main">
                     <span class="content_item_d">{{ calendar.date|dateformat }}</span>
@@ -59,10 +59,6 @@ export default {
         };
     },
     methods: {
-        getDate() {
-            this.year = this.$route.params.year;
-            this.month = this.$route.params.month;
-        },
         actionRead() {
             axios.get("/api/action/read").then((res) => {
                 this.actions = res.data;
@@ -71,36 +67,32 @@ export default {
 
         // カレンダー作成
         getCalendar() {
-            // ①最終日の日付を求める
-            this.lastday = moment().endOf("month").date();
-            console.log(this.lastday);
+            this.year = this.$route.params.year;
+            this.month = this.$route.params.month;
+            // ①最終日の日付を求める→OK
+            this.lastday = new Date(this.year, this.month, 0).getDate();
             // ②最初と最後の空欄の数を求める
-            this.first_cnt = moment().startOf("month").day() - 1;
-            this.last_cnt = (7 - moment().endOf("month").day()) % 7;
+            this.first_cnt = (6 + new Date(this.year, this.month - 1, 1).getDay())%7;
+            this.last_cnt = (42 -(this.first_cnt + this.lastday))%7;
             // ③配列calendarsの中身を一旦空にする
             this.calendars.splice(0, this.calendars.length);
             // ④配列の中身を追加する
             for (let i = 0; i < this.lastday; i++) {
+
                 this.calendars.push({
-                    date:
-                        this.year +
-                        "-" +
-                        ("00" + this.month).slice(-2) +
-                        "-" +
-                        ("00" + Number(i + 1)).slice(-2),
+                    date: this.year + "-" + ("00" + this.month).slice(-2) + "-" + ("00" + Number(i + 1)).slice(-2),
                 });
             }
 
         },
     },
     mounted() {
-        this.getDate();
-        this.actionRead();
         this.getCalendar();
+        this.actionRead();
     },
 
     watch: {
-        $route: "getDate",
+        $route: "getCalendar",
     },
     filters: {
         dateformat: function(date){
@@ -124,14 +116,16 @@ h2 {
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
-    &_prev {
-        font-size: 15px;
-        margin-right: 10px;
+    a{
+        font-size: 40px;
+        color: #07889b;
+        font-weight: bold;
+        padding: 0 20px;
+        &:hover{
+            text-decoration: none;
+        }
     }
-    &_next {
-        font-size: 15px;
-        margin-left: 10px;
-    }
+
 }
 form {
     position: relative;
