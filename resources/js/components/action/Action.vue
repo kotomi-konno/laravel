@@ -30,6 +30,7 @@
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main" :class='{"is_today": calendar.date == todayDate }'>
                     <span class="content_item_d">{{ calendar.date|dateformat }}</span>
+                    <p v-if="calendar.actionTime">{{ calendar.actionTime }}</p>
                 </li>
 
                 <li v-for="(n,index) in last_cnt" :key="index" class="content_item blank"></li>
@@ -39,6 +40,7 @@
         <!-- カレンダー↑↑↑↑ -->
 
         <pre>{{$data.actions}}</pre>
+        <pre>{{$data.calendars}}</pre>
     </div>
 </template>
 
@@ -64,11 +66,20 @@ export default {
         actionRead() {
             axios.get("/api/action/read").then((res) => {
                 this.actions = res.data;
+                // actionsのdone_dateとcalendarsのdateが一致するときにcalendarsのactionTimeにactionsのdone_timeを入れる
+                for(let i=0; i<this.actions.length; i++){
+                    for(let t=0; t<this.calendars.length; t++){
+                        if(this.actions[i].done_date == this.calendars[t].date){
+                            this.calendars[t].actionTime= this.actions[i].done_time;
+                        }
+                    }
+                }
             });
         },
 
         // カレンダー作成
         getCalendar() {
+            this.actionRead();
             this.year = this.$route.params.year;
             this.month = this.$route.params.month;
             // ①最終日の日付を求める→OK
@@ -88,6 +99,8 @@ export default {
                         ("00" + this.month).slice(-2) +
                         "-" +
                         ("00" + Number(i + 1)).slice(-2),
+
+                    actionTime: "",
                 });
             }
         },
@@ -168,6 +181,9 @@ form {
 .content {
     display: flex;
     flex-wrap: wrap;
+    ul li{
+        list-style: none;
+    }
     &_item {
         list-style: none;
         width: calc(100% / 7);
