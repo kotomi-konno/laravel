@@ -30,7 +30,9 @@
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main" :class='{"is_today": calendar.date == todayDate }'>
                     <span class="content_item_d">{{ calendar.date|dateformat }}</span>
-                    <p v-if="calendar.actionTime">{{ calendar.actionTime }}</p>
+                    <ul>
+                        <li v-if="calendar.actionTime" >{{ calendar.actionTime }}</li>
+                    </ul>
                 </li>
 
                 <li v-for="(n,index) in last_cnt" :key="index" class="content_item blank"></li>
@@ -70,7 +72,11 @@ export default {
                 for(let i=0; i<this.actions.length; i++){
                     for(let t=0; t<this.calendars.length; t++){
                         if(this.actions[i].done_date == this.calendars[t].date){
-                            this.calendars[t].actionTime= this.actions[i].done_time;
+                            if(this.calendars[t].actionTime === ""){
+                                this.calendars[t].actionTime= this.actions[i].done_time;
+                            }else{
+                                this.calendars[t].actionTime += this.actions[i].done_time;
+                            }
                         }
                     }
                 }
