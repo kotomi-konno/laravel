@@ -1,5 +1,5 @@
 <template>
-    <div class="goalComponent">
+    <div class="goal">
         <router-link to="/goalcreate">新しい目標を登録する</router-link>
 
         <div class="goalpage_inner">
@@ -97,7 +97,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.goalComponent {
+.goal {
     .goalpage_inner {
         h2 {
             padding: 20px;

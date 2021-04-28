@@ -1,5 +1,5 @@
 <template>
-    <div class="searchComponent">
+    <div class="actionComponent">
         <h2>実行記録</h2>
 
         <!-- ページャー -->
@@ -28,7 +28,7 @@
             <ul class="content">
                 <li v-for="(n,index) in first_cnt" :key="index+100" class="content_item blank"></li>
 
-                <li v-for="calendar in calendars" :key="calendar.date" class="content_item main">
+                <li v-for="calendar in calendars" :key="calendar.date" class="content_item main" :class='{"is_today": calendar.date == todayDate }'>
                     <span class="content_item_d">{{ calendar.date|dateformat }}</span>
                 </li>
 
@@ -38,7 +38,7 @@
         </div>
         <!-- カレンダー↑↑↑↑ -->
 
-        <!-- <pre>{{$data}}</pre> -->
+        <pre>{{$data.actions}}</pre>
     </div>
 </template>
 
@@ -56,6 +56,8 @@ export default {
             first_cnt: 0,
             last_cnt: 0,
             lastday: 0,
+            today: new Date(),
+            todayDate: 0,
         };
     },
     methods: {
@@ -72,22 +74,36 @@ export default {
             // ①最終日の日付を求める→OK
             this.lastday = new Date(this.year, this.month, 0).getDate();
             // ②最初と最後の空欄の数を求める
-            this.first_cnt = (6 + new Date(this.year, this.month - 1, 1).getDay())%7;
-            this.last_cnt = (42 -(this.first_cnt + this.lastday))%7;
+            this.first_cnt =
+                (6 + new Date(this.year, this.month - 1, 1).getDay()) % 7;
+            this.last_cnt = (42 - (this.first_cnt + this.lastday)) % 7;
             // ③配列calendarsの中身を一旦空にする
             this.calendars.splice(0, this.calendars.length);
             // ④配列の中身を追加する
             for (let i = 0; i < this.lastday; i++) {
-
                 this.calendars.push({
-                    date: this.year + "-" + ("00" + this.month).slice(-2) + "-" + ("00" + Number(i + 1)).slice(-2),
+                    date:
+                        this.year +
+                        "-" +
+                        ("00" + this.month).slice(-2) +
+                        "-" +
+                        ("00" + Number(i + 1)).slice(-2),
                 });
             }
-
+        },
+        // 今日の日付をyyyy-MM-ddの形で取得する（calendar.dateと同じ形にしたい）
+        isToday() {
+            this.todayDate =
+                this.today.getFullYear() +
+                "-" +
+                ("00" + (this.today.getMonth() + 1)).slice(-2) +
+                "-" +
+                ("00" + this.today.getDate()).slice(-2);
         },
     },
     mounted() {
         this.getCalendar();
+        this.isToday();
         this.actionRead();
     },
 
@@ -95,11 +111,10 @@ export default {
         $route: "getCalendar",
     },
     filters: {
-        dateformat: function(date){
-            return moment(date).format("D")
-        }
-    }
-    
+        dateformat: function (date) {
+            return moment(date).format("D");
+        },
+    },
 };
 </script>
 
@@ -116,16 +131,15 @@ h2 {
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
-    a{
+    a {
         font-size: 40px;
         color: #07889b;
         font-weight: bold;
         padding: 0 20px;
-        &:hover{
+        &:hover {
             text-decoration: none;
         }
     }
-
 }
 form {
     position: relative;
@@ -186,6 +200,9 @@ form {
         }
         &.blank {
             background-color: rgb(213, 213, 213);
+        }
+        &.is_today {
+            background-color: rgba(253, 255, 192, 0.527);
         }
     }
 }

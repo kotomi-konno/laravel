@@ -1,5 +1,5 @@
 <template>
-    <div class="searchComponent">
+    <div class="search">
         <h2>検索画面</h2>
         <form @submit.prevent="goalSearch">
             ユーザー：<input v-model="search.usersName" type="text"><br>

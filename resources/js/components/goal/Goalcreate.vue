@@ -1,5 +1,5 @@
 <template>
-    <div class="goalComponent">
+    <div class="goalCreate">
         <h2>目標登録画面</h2>
 
         <hr>
@@ -43,7 +43,6 @@ export default {
         goalCreate() {
             if (this.newgoal.content != "") {
                 axios.post("/api/goal/create", this.newgoal).then((res) => {
-                    console.log(res.data);
                     this.newgoal.content = "";
                     this.newgoal.deadline = "";
                     this.newgoal.time = "";
@@ -60,7 +59,6 @@ export default {
         },
         getLoginUser() {
             axios.get("/api/loginuser").then((res) => {
-                console.log(res.data);
                 this.newgoal.users_id = res.data.id;
                 this.newgoal.users_name = res.data.name;
             });
@@ -73,7 +71,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.goalComponent {
+.goalCreate {
     h2 {
         padding: 20px;
         text-align: center;

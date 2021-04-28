@@ -1,5 +1,5 @@
 <template>
-    <div class="taskComponent">
+    <div class="user">
         <h2>ユーザー画面</h2>
         私の名前は<span>{{user.name}}</span><br>
         メールアドレスは<span>{{user.email}}</span>
