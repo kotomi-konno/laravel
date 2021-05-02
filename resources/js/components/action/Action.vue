@@ -30,8 +30,10 @@
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main" :class='{"is_today": calendar.date == todayDate }'>
                     <span class="content_item_d">{{ calendar.date|dateformat }}</span>
-                    <ul>
-                        <li v-if="calendar.actionTime" >{{ calendar.actionTime }}</li>
+                    <ul class="content_item_action" style="font-size: 9px;">
+                        <li v-for="(actionRecord, index) in calendar.actionRecords" :key="index">
+                            <span v-if="actionRecord.actionTime">・{{ actionRecord.actionTime }}（{{actionRecord.actionContent}}）</span>
+                        </li>
                     </ul>
                 </li>
 
@@ -42,7 +44,7 @@
         <!-- カレンダー↑↑↑↑ -->
 
         <pre>{{$data.actions}}</pre>
-        <pre>{{$data.calendars}}</pre>
+        <!-- <pre>{{$data.calendars}}</pre> -->
     </div>
 </template>
 
@@ -68,18 +70,18 @@ export default {
         actionRead() {
             axios.get("/api/action/read").then((res) => {
                 this.actions = res.data;
-                // actionsのdone_dateとcalendarsのdateが一致するときにcalendarsのactionTimeにactionsのdone_timeを入れる
+                // actionsのdone_dateとcalendarsのdateが一致するときにcalendars.actionsのactionTimeとactionContentにactionsのdone_timeと、goals_contentを入れる
                 for(let i=0; i<this.actions.length; i++){
                     for(let t=0; t<this.calendars.length; t++){
-                        if(this.actions[i].done_date == this.calendars[t].date){
-                            if(this.calendars[t].actionTime === ""){
-                                this.calendars[t].actionTime= this.actions[i].done_time;
-                            }else{
-                                this.calendars[t].actionTime += this.actions[i].done_time;
-                            }
+                        if(this.actions[i].done_date === this.calendars[t].date){
+                            this.calendars[t].actionRecords.push({
+                                actionTime: this.actions[i].done_time,
+                                actionContent: this.actions[i].goals_content,                         
+                            });
                         }
                     }
                 }
+                console.log(res.data);
             });
         },
 
@@ -106,7 +108,16 @@ export default {
                         "-" +
                         ("00" + Number(i + 1)).slice(-2),
 
-                    actionTime: "",
+                    actionRecords: [
+                        {
+                            actionTime: "",
+                            actionContent: ""
+                        },
+                        {
+                            actionTime: "",
+                            actionContent: ""
+                        },
+                    ],
                 });
             }
         },
@@ -123,7 +134,6 @@ export default {
     mounted() {
         this.getCalendar();
         this.isToday();
-        this.actionRead();
     },
 
     watch: {
@@ -187,7 +197,7 @@ form {
 .content {
     display: flex;
     flex-wrap: wrap;
-    ul li{
+    ul li {
         list-style: none;
     }
     &_item {
@@ -219,6 +229,9 @@ form {
         }
         &.main {
             font-size: 13px;
+            .content_item_action li span {
+                color: black;
+            }
         }
         &.blank {
             background-color: rgb(213, 213, 213);

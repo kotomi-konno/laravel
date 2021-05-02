@@ -40,5 +40,9 @@ class User extends Authenticatable
     public function goals(){
         return $this->hasMany('App\Goal');
     }
+    public function actions(){
+        return $this->hasMany('App\Action');
+    }
+
 
 }

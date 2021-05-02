@@ -23,6 +23,7 @@ class GoalSeeder extends Seeder
         //             'completed' => false
         //         ]);
         // }
-        factory(Goal::class, 100)->create();
+        factory(Goal::class, 20)->create();
     }
 }
+

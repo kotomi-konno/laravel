@@ -12,11 +12,11 @@ class ActionSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             Action::create([
-                'users_id' => $i%3 +1,
-                'goals_id' => $i%2 +1,
-                'done_date' => "2021-04-25",
+                'users_id' => $i,
+                'goals_id' => $i,
+                'done_date' => "2021-05-".$i,
                 'done_time' => '6:00:00',
             ]);
         }

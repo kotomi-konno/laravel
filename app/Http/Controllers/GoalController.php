@@ -14,7 +14,6 @@ class GoalController extends Controller
         // return $request->completed;
         Goal::create([
             'users_id' => $request->users_id,
-            // 'name' => $request->name,
             'content' => $request->content,
             'deadline' => $request->deadline,
             'time' => $request->time,
