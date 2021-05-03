@@ -1,7 +1,7 @@
 <template>
     <div class="actionComponent">
-        <router-link to="/actioncreate">活動を入力する</router-link>
         <h2>活動記録</h2>
+        <router-link to="/actioncreate"  class="action_btn">活動を入力する</router-link>
 
         <!-- ページャー -->
         <div class="pager">
@@ -72,12 +72,14 @@ export default {
             axios.get("/api/action/read").then((res) => {
                 this.actions = res.data;
                 // actionsのdone_dateとcalendarsのdateが一致するときにcalendars.actionsのactionTimeとactionContentにactionsのdone_timeと、goals_contentを入れる
-                for(let i=0; i<this.actions.length; i++){
-                    for(let t=0; t<this.calendars.length; t++){
-                        if(this.actions[i].done_date === this.calendars[t].date){
+                for (let i = 0; i < this.actions.length; i++) {
+                    for (let t = 0; t < this.calendars.length; t++) {
+                        if (
+                            this.actions[i].done_date === this.calendars[t].date
+                        ) {
                             this.calendars[t].actionRecords.push({
                                 actionTime: this.actions[i].done_time,
-                                actionContent: this.actions[i].goals_content,                         
+                                actionContent: this.actions[i].goals_content,
                             });
                         }
                     }
@@ -112,11 +114,11 @@ export default {
                     actionRecords: [
                         {
                             actionTime: "",
-                            actionContent: ""
+                            actionContent: "",
                         },
                         {
                             actionTime: "",
-                            actionContent: ""
+                            actionContent: "",
                         },
                     ],
                 });
@@ -152,25 +154,44 @@ export default {
 
 
 <style lang="scss" scoped>
-h2 {
-    text-align: center;
-    padding: 20px;
-}
-.pager {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-    a {
-        font-size: 40px;
-        color: #07889b;
+.actionComponent {
+    .action_btn {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        margin: 30px auto;
+        width: 25%;
+        padding: 8px;
+        background-color: #07889b;
+        color: #fff;
+        border-bottom: solid 4px #07414f9a;
+        border-radius: 5px;
         font-weight: bold;
-        padding: 0 20px;
-        &:hover {
-            text-decoration: none;
+        font-size: 15px;
+        &:active {
+            transform: translateY(4px);
+            border-bottom: none;
+        }
+    }
+    .pager {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 30px 0 20px 0;
+        h3{
+            margin: 0;
+        }
+        a {
+            font-size: 30px;
+            color: #607d8b;
+            padding: 0 25px;
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
 }
+
 form {
     position: relative;
     .vue-loading-wrap {
