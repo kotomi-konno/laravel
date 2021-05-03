@@ -5,7 +5,7 @@
             <h2>目標</h2>
             <router-link to="/goalcreate">目標を登録する</router-link>
          
-            <h3>＜　目標一覧　＞</h3>
+            <h3>目標一覧</h3>
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
                     <div class="goalpage_inner_main">
