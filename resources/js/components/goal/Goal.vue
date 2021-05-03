@@ -2,9 +2,10 @@
     <div class="goal">
 
         <div class="goalpage_inner">
-            <h2>目標一覧</h2>
-            <router-link to="/goalcreate" class="goalpage_inner_btn">目標を登録する</router-link>
-            <hr>
+            <h2>目標</h2>
+            <router-link to="/goalcreate">目標を登録する</router-link>
+         
+            <h3>＜　目標一覧　＞</h3>
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
                     <div class="goalpage_inner_main">
@@ -129,7 +130,16 @@ export default {
                 border-radius: 5px;
                 width: 100px;
             }
+            .goalpage_inner_btn button{
+                background-color: #FFC107;
+                border: none;
+                padding: 8px 18px
+            }
         }
+    }
+    h3{
+        text-align: center;
+        
     }
 }
 
