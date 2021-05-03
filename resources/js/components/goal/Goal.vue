@@ -1,9 +1,9 @@
 <template>
     <div class="goal">
-        <router-link to="/goalcreate">目標を登録する</router-link>
 
         <div class="goalpage_inner">
             <h2>目標一覧</h2>
+            <router-link to="/goalcreate" class="goalpage_inner_btn">目標を登録する</router-link>
             <hr>
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
@@ -97,30 +97,42 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.goal {
-    .goalpage_inner {
-        h2 {
-            padding: 20px;
-            text-align: center;
-            margin: 0;
+.goalpage_inner {
+    a{
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        margin: 30px auto;
+        width: 25%;
+        padding:  8px;
+        background-color:#07889b;
+        color: #fff;
+        border-bottom: solid 4px #07414f9a;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 15px;
+        &:active{
+            transform: translateY(4px);
+            border-bottom: none;
         }
-        ul {
-            padding: 0;
-            li {
-                list-style: none;
-                display: flex;
-                justify-content: space-around;
-                padding: 15px 50px;
-                border-bottom: 1px dotted rgba(128, 128, 128, 0.552);
-                select {
-                    border: 1px solid;
-                    border-radius: 5px;
-                    width: 100px;
-                }
+    }
+    ul {
+        padding: 0;
+        li {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 50px;
+            border-bottom: 1px dotted rgba(128, 128, 128, 0.552);
+            select {
+                border: 1px solid;
+                border-radius: 5px;
+                width: 100px;
             }
         }
     }
 }
+
 
 .pagination{
    max-width: 500px;

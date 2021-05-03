@@ -12,8 +12,9 @@
 <style scoped>
 .header {
     text-align: center;
-    background-color:#07889b;
-    margin-bottom: 50px;
+    background-color: #607D8B;
+    color: #fff;
+    margin-bottom: 15px;
 }
 .header_nav {
     padding: 25px;

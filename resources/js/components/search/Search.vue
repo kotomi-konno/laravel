@@ -68,9 +68,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-h2{
-    text-align: center;
-}
+
 li {
     list-style: none;
     margin-bottom: 15px;

@@ -2,8 +2,6 @@
     <div class="goalCreate">
         <h2>目標登録画面</h2>
 
-        <hr>
-
         <form @submit.prevent="goalCreate">
             <div>
                 <p>ユーザーID：{{ newgoal.users_id }}</p>
@@ -72,10 +70,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .goalCreate {
-    h2 {
-        padding: 20px;
-        text-align: center;
-    }
     form {
         padding: 15px ;
         // width: 48%;
