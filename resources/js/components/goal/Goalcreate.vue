@@ -99,5 +99,6 @@ select {
     border-radius: 5px;
     margin: 5px;
     width: 100px;
+    padding: 0 5px;
 }
 </style>

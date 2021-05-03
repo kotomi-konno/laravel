@@ -1,6 +1,6 @@
 <template>
     <div class="goal">
-        <router-link to="/goalcreate">新しい目標を登録する</router-link>
+        <router-link to="/goalcreate">目標を登録する</router-link>
 
         <div class="goalpage_inner">
             <h2>目標一覧</h2>

@@ -9,15 +9,17 @@ use App\Goal;
 
 class ActionController extends Controller
 {
-    public function create()
+
+    public function create(Request $request)
     {
         Action::create([
-            'users_id' => $request->users_id,
-            'goals_id' => $request->goals_id,
             'done_date' => $request->done_date,
             'done_time' => $request->done_time,
+            'users_id' => $request->users_id,
+            'goals_id' => $request->goals_id,
         ]);
     }
+    
 
     public function read()
     {
@@ -29,7 +31,5 @@ class ActionController extends Controller
         }
 
         return $datas;
-        // return User::find($datas[0]->users_id)->name;
-        // return Goal::find($datas[1]->goals_id)->content;
     }
 }
