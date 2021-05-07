@@ -4,7 +4,7 @@
         <div class="goalpage_inner">
             <h2>目標</h2>
             <router-link to="/goalcreate">目標を登録する</router-link>
-         
+
             <h3>目標一覧</h3>
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
@@ -17,8 +17,8 @@
                         <input v-if="goal.edit" v-model="goal.deadline" type="date"><br>
 
                         目標時間：<span v-if="!goal.edit">{{ goal.time }}</span>
-                        <select v-if="goal.edit" v-model="goal.time" >
-                            <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`" >{{n}}:00</option>
+                        <select v-if="goal.edit" v-model="goal.time">
+                            <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`">{{n}}:00</option>
                         </select><br>
 
                         達成したかどうか：<input v-if="!goal.edit" type="checkbox" v-model="goal.completed" disabled>
@@ -99,20 +99,20 @@ export default {
 </script>
 <style lang="scss" scoped>
 .goalpage_inner {
-    a{
+    a {
         display: block;
         text-align: center;
         text-decoration: none;
         margin: 30px auto;
         width: 25%;
-        padding:  8px;
-        background-color:#07889b;
+        padding: 8px;
+        background-color: #07889b;
         color: #fff;
         border-bottom: solid 4px #07414f9a;
         border-radius: 5px;
         font-weight: bold;
         font-size: 15px;
-        &:active{
+        &:active {
             transform: translateY(4px);
             border-bottom: none;
         }
@@ -130,42 +130,45 @@ export default {
                 border-radius: 5px;
                 width: 100px;
             }
-            .goalpage_inner_btn button{
-                background-color: #FFC107;
+            .goalpage_inner_btn button {
+                background-color: #ffc107;
                 border: none;
-                padding: 8px 18px
+                padding: 8px 18px;
             }
         }
     }
-    h3{
+    h3 {
         text-align: center;
-        
     }
 }
 
-
-.pagination{
-   max-width: 500px;
-   margin: 20px auto;
-//    margin-bottom: 15px;
-   nav ::v-deep .v-pagination{
-       &__item{
-           color: #000066;
-           border: 1px solid #000066;
-           &--active{
-               color: white;
-               background-color: #000066;
-           }
-       }
-       &__navigation{
-           border: 1px solid #000066;
-           .theme--light.v-icon{
-               color: #000066;
-           }
-           &--disabled{
-               opacity: 0.3;
-           }
-       }
-   }
+.pagination {
+    max-width: 500px;
+    margin: 20px auto;
+    justify-content: center;
+    nav ::v-deep .v-pagination {
+        &__item {
+            box-shadow: none;
+            border-radius: 50%;
+            color: #607d8b;
+            border: 1px solid#607d8b;
+            &--active {
+                color: white;
+                background-color: #607d8b;
+            }
+        }
+        &__navigation {
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+            .theme--light.v-icon {
+                color: #607d8b;
+                font-size: 30px;
+            }
+            &--disabled {
+                opacity: 0.2;
+            }
+        }
+    }
 }
 </style>

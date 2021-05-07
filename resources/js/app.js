@@ -31,11 +31,11 @@ const router = new VueRouter({
             name: 'search',
             component: () => import('./components/search/Search.vue'),
         },
-        {
-            path: '/user',
-            name: 'user',
-            component: () => import('./components/user/User.vue'),
-        },
+        // {
+        //     path: '/user',
+        //     name: 'user',
+        //     component: () => import('./components/user/User.vue'),
+        // },
         {
             path: '/action/:year/:month',
             name: 'action',
@@ -43,6 +43,10 @@ const router = new VueRouter({
         },
         {
             path: '/action',
+            redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
+        },
+        {
+            path: '/',
             redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
         },
         {

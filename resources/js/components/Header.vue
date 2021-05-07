@@ -1,10 +1,10 @@
 <template>
     <div class="header">
         <div class="header_nav">
-            <router-link to="/goal">goal</router-link>
             <router-link to="/action">action</router-link>
+            <router-link to="/goal">goal</router-link>
             <router-link to="/search">search</router-link>
-            <router-link to="/user">user</router-link>
+            <!-- <router-link to="/user">user</router-link> -->
         </div>
 
         <div class="header_login">

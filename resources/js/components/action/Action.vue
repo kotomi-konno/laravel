@@ -44,7 +44,7 @@
         </div>
         <!-- カレンダー↑↑↑↑ -->
 
-        <pre>{{$data.actions}}</pre>
+        <!-- <pre>{{$data.actions}}</pre> -->
         <!-- <pre>{{$data.calendars}}</pre> -->
     </div>
 </template>
