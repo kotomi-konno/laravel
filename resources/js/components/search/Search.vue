@@ -1,6 +1,6 @@
 <template>
     <div class="search">
-        <h2>検索画面</h2>
+        <h2>目標検索画面</h2>
         <form @submit.prevent="goalSearch">
             ユーザー：<input v-model="search.usersName" type="text"><br>
             内容：<input v-model="search.content" type="text"><br>
@@ -12,8 +12,8 @@
         <ul>
             <li v-for="(goal, index) in goals" :key="index">
                 ユーザー：<span>{{goal.users_id}}</span><br>
+                内容：<span :class="{red:goal.completed}">{{goal.content}}</span><br>
                 達成したかどうか：<input type="checkbox" v-model="goal.completed" disabled='disabled'><br>
-                内容：<span :class="{red:goal.completed}">{{goal.content}}</span>
             </li>
         </ul>
 
@@ -45,8 +45,8 @@ export default {
     methods: {
         goalSearch() {
             axios.post("/api/goal/search", this.search).then((res) => {
-                // this.goals = res.data;
                 this.goalDatas = res.data;
+                console.log(this.goalDatas);
                 this.getNumber(1);
                 this.isShow = true;
             });
@@ -78,25 +78,32 @@ li {
 }
 .pagination {
     max-width: 500px;
-    margin-bottom: 15px;
+    margin: 20px auto;
+    justify-content: center;
     nav ::v-deep .v-pagination {
         &__item {
-            color: #000066;
-            border: 1px solid #000066;
+            box-shadow: none;
+            border-radius: 50%;
+            color: #607d8b;
+            border: 1px solid#607d8b;
             &--active {
                 color: white;
-                background-color: #000066;
+                background-color: #607d8b;
             }
         }
         &__navigation {
-            border: 1px solid #000066;
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
             .theme--light.v-icon {
-                color: #000066;
+                color: #607d8b;
+                font-size: 30px;
             }
             &--disabled {
-                opacity: 0.3;
+                opacity: 0.2;
             }
         }
     }
 }
 </style>
+

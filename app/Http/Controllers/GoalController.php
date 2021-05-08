@@ -51,10 +51,10 @@ class GoalController extends Controller
         Goal::where("id", $id)->delete();
     }
 
+
     public function search(Request $request)
     {
-        $query = Goal::query()
-        ->orderBy('id', 'desc');
+        $query = Goal::query()->orderBy('id', 'desc');
 
         $query->where('completed','=', $request->completed);
         if(isset($request->content)){
