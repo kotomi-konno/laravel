@@ -37,6 +37,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -47,7 +52,9 @@ __webpack_require__.r(__webpack_exports__);
         users_id: 0,
         goals_id: 0
       },
-      actions: []
+      actions: [],
+      goals: [],
+      discomplete_goals: []
     };
   },
   methods: {
@@ -59,7 +66,6 @@ __webpack_require__.r(__webpack_exports__);
           _this.newaction.done_date = "";
           _this.newaction.done_time = "";
           _this.newaction.goals_id = 0;
-          _this.newaction.goals_content = "";
 
           _this.actionRead();
 
@@ -81,11 +87,26 @@ __webpack_require__.r(__webpack_exports__);
         _this3.newaction.users_id = res.data.id;
         _this3.newaction.users_name = res.data.name;
       });
+    },
+    // 未達成のゴールで、自分が作成したゴールだけを表示させる
+    getDiscompleteGoal: function getDiscompleteGoal() {
+      var _this4 = this;
+
+      axios.get("/api/goal/read").then(function (res) {
+        _this4.goals = res.data;
+
+        for (var i = 0; i < _this4.goals.length; i++) {
+          if (_this4.goals[i].completed == 0 && _this4.goals[i].users_id == _this4.newaction.users_id) {
+            _this4.discomplete_goals.push(_this4.goals[i]);
+          }
+        }
+      });
     }
   },
   mounted: function mounted() {
     this.actionRead();
     this.getLoginUser();
+    this.getDiscompleteGoal();
   }
 });
 
@@ -458,7 +479,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "actionCreate" }, [
-    _c("h2", [_vm._v("活動入力画面")]),
+    _c("h2", [_vm._v("活動入力画面だよだよhogehoge")]),
     _vm._v(" "),
     _c(
       "form",
@@ -499,29 +520,53 @@ var render = function() {
             }
           }),
           _c("br"),
-          _vm._v("\n            取り組んだゴールID："),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.newaction.goals_id,
-                expression: "newaction.goals_id"
-              }
-            ],
-            attrs: { type: "number" },
-            domProps: { value: _vm.newaction.goals_id },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _vm._v("\n\n            取り組んだゴール：\n            "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.newaction.goals_id,
+                  expression: "newaction.goals_id"
                 }
-                _vm.$set(_vm.newaction, "goals_id", $event.target.value)
+              ],
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.newaction,
+                    "goals_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("option", { attrs: { value: "0" } }, [
+                _vm._v("選択してください")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.discomplete_goals, function(discomplete_goal, index) {
+                return _c(
+                  "option",
+                  { key: index, domProps: { value: discomplete_goal.id } },
+                  [_vm._v(_vm._s(discomplete_goal.content))]
+                )
+              })
+            ],
+            2
+          ),
           _c("br"),
-          _vm._v("\n            活動時間：\n            "),
+          _vm._v("\n\n            活動時間：\n            "),
           _c(
             "select",
             {
@@ -565,7 +610,9 @@ var render = function() {
         _vm._v(" "),
         _c("button", [_vm._v("入力完了")])
       ]
-    )
+    ),
+    _vm._v(" "),
+    _c("pre", [_vm._v(_vm._s(_vm.$data.discomplete_goals))])
   ])
 }
 var staticRenderFns = []
