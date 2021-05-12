@@ -17,5 +17,5 @@ Route::post('/goal/search', 'GoalController@search');
 
 
 // action
-Route::post('/action/create', 'ActionController@create');
+Route::post('/action/save', 'ActionController@save');
 Route::get('/action/read', 'ActionController@read');

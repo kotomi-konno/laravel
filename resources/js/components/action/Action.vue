@@ -1,7 +1,7 @@
 <template>
     <div class="actionComponent">
         <h2>活動記録</h2>
-        <router-link to="/actioncreate"  class="action_btn">活動を入力する</router-link>
+        <router-link to="/actionsave"  class="action_btn">活動を入力する</router-link>
 
         <!-- ページャー -->
         <div class="pager">

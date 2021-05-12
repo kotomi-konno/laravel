@@ -50,13 +50,13 @@ const router = new VueRouter({
             redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
         },
         {
-            path: '/actioncreate',
-            name: 'actioncreate',
-            component: () => import('./components/action/Actioncreate.vue'),
+            path: '/actionsave',
+            name: 'actionsave',
+            component: () => import('./components/action/Actionsave.vue'),
         },
         {
-            path: '/actioncreate',
-            redirect: `/actioncreate/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
+            path: '/actionsave',
+            redirect: `/actionsave/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
         },
 
     ]

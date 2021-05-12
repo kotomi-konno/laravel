@@ -10,9 +10,9 @@ use App\Goal;
 class ActionController extends Controller
 {
 
-    public function create(Request $request)
+    public function save(Request $request)
     {
-        Action::create([
+        Action::save([
             'done_date' => $request->done_date,
             'done_time' => $request->done_time,
             'users_id' => $request->users_id,
