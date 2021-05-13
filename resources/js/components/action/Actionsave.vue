@@ -28,7 +28,6 @@
             <button class="action_btn">入力完了</button>
         </form>
 
-        <!-- <pre>{{$data.newaction}}</pre> -->
 
     </div>
 </template>
@@ -49,15 +48,12 @@ export default {
             actions: [],
             goals: [],
             discomplete_goals: [],
-            // year: 0,
-            // month: 0,
-            // date: 0,
         };
     },
 
     methods: {
         actionSave() {
-            if (this.newaction.done_date != "") {
+            if (this.newaction.done_time != "") {
                 axios.post("/api/action/save", this.newaction).then((res) => {
                     this.newaction.done_date = "";
                     this.newaction.done_time = "";
@@ -95,17 +91,19 @@ export default {
             });
         },
 
-        // getDate() {
-        //     this.year = this.$route.params.year;
-        //     this.month = this.$route.params.month;
-        //     this.date = this.$route.params.date;
-        // },
+        getSelectDate() {
+            this.newaction.done_date = this.$route.params.selectDate;
+        },
+    },
+    watch :{
+        $route: "getSelectDate",
     },
 
     mounted() {
         this.actionRead();
         this.getLoginUser();
         this.getDiscompleteGoal();
+        this.getSelectDate();
     },
 };
 </script>

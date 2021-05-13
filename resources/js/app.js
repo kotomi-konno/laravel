@@ -16,6 +16,7 @@ Vue.use(Vuetify);
 Vue.use(VueRouter);
 const router = new VueRouter({
     routes: [
+        // goal
         {
             path: '/goal',
             name: 'goal',
@@ -26,16 +27,17 @@ const router = new VueRouter({
             name: 'goalcreate',
             component: () => import('./components/goal/Goalcreate.vue'),
         },
+        // search
         {
             path: '/search',
             name: 'search',
             component: () => import('./components/search/Search.vue'),
         },
-        // {
-        //     path: '/user',
-        //     name: 'user',
-        //     component: () => import('./components/user/User.vue'),
-        // },
+        // action
+        {
+            path: '/',
+            redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
+        },
         {
             path: '/action/:year/:month',
             name: 'action',
@@ -45,23 +47,20 @@ const router = new VueRouter({
             path: '/action',
             redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
         },
-        {
-            path: '/',
-            redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
-        },
         // {
-        //     path: '/actionsave/:calendar.date',
+        //     path: '/actionsave',
         //     name: 'actionsave',
         //     component: () => import('./components/action/Actionsave.vue'),
         // },
         {
-            path: '/actionsave',
+            path: '/actionsave/:selectDate',
             name: 'actionsave',
             component: () => import('./components/action/Actionsave.vue'),
         },
         {
             path: '/actionsave',
-            redirect: `/actionsave/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
+            name: 'actionsave',
+            component: () => import('./components/action/Actionsave.vue'),
         },
 
     ]

@@ -31,8 +31,8 @@
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main" :class='{"is_today": calendar.date == todayDate }'>
                     <!-- <router-link :to="`/actionsave/${calendar.date}`"> -->
-                    <router-link to="/actionsave">
-                        <span class="content_item_d">{{ calendar.date|dateformat }}</span>
+                    <router-link :to="`/actionsave/${calendar.date}`">
+                        <span class="content_item_d"  >{{ calendar.date|dateformat }}</span>
                         <ul class="content_item_action" style="font-size: 9px;">
                             <li v-for="(actionRecord, index) in calendar.actionRecords" :key="index">
                                 <span v-if="actionRecord.actionTime">・{{ actionRecord.actionTime }}（{{actionRecord.actionContent}}）</span>
@@ -47,8 +47,6 @@
         </div>
         <!-- カレンダー↑↑↑↑ -->
 
-        <!-- <pre>{{$data.actions}}</pre> -->
-        <!-- <pre>{{$data.calendars}}</pre> -->
     </div>
 </template>
 
