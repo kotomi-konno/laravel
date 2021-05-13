@@ -3,17 +3,27 @@
         <h2>目標登録画面</h2>
 
         <form @submit.prevent="goalCreate">
-            <div>
-                <p>ユーザーID：{{ newgoal.users_id }}</p>
-                <p>ユーザーネーム：{{ newgoal.users_name }}</p>
-                取り組む内容：<input type="text" v-model="newgoal.content"><br>
-                締切日：<input type="date" v-model="newgoal.deadline"><br>
-                目標時間：
-                <select v-model="newgoal.time">
-                    <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`">{{n}}:00</option>
-                </select><br>
+            <div class="goalCreate_contents">
+
+                <div class="goalCreate_content">
+                    <p>▼ 取り組む内容</p>
+                    <input type="text" v-model="newgoal.content"><br>
+                </div>
+
+                <div class="goalCreate_content">
+                    <p>▼ 締切日</p>
+                    <input type="date" v-model="newgoal.deadline"><br>
+                </div>
+
+                <div class="goalCreate_content">
+                    <p>▼ 目標時間</p>
+                    <select v-model="newgoal.time">
+                        <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`">{{n}}:00</option>
+                    </select><br>
+                </div>
+
             </div>
-            <button>登録</button>
+            <button class="goalCreate_btn" >登録</button>
         </form>
 
         <!-- <pre>{{$data}}</pre> -->
@@ -69,30 +79,59 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+// .goalpage_inner {
+//     border: 1px solid grey;
+// }
+// select {
+//     border: 1px solid black;
+//     border-radius: 5px;
+//     margin: 5px;
+//     width: 100px;
+//     padding: 0 5px;
+// }
+
 .goalCreate {
     form {
-        padding: 15px ;
-        // width: 48%;
+        width: 70%;
         margin: 0 auto;
-        button {
-            border: 1px solid black;
-            padding: 0px 10px;
-            border-radius: 5px;
+        .goalCreate_contents {
+            margin: 30px auto;
+            .goalCreate_content {
+                margin-bottom: 15px;
+                width: 100% ;
+                p{
+                    margin-bottom: 0;
+                    font-weight: bold;
+                }
+                input , select {
+                    border: 1px solid grey;
+                    border-radius: 5px;
+                    margin: 8px;
+                    padding: 3px 8px;
+                    width: 95%;
+                }
+            }
+        }
+        .goalCreate_btn {
             display: block;
-            margin: 0 auto;
-            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            margin: 30px auto;
+            width: 30%;
+            padding: 8px;
+            background-color: #07889b;
+            color: #fff;
+            border: 1px solid #07889b;
+            border-bottom: solid 4px #07414f9a;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 15px;
+            &:active {
+                transform: translateY(4px);
+                border-bottom: none;
+            }
         }
     }
-}
-
-.goalpage_inner {
-    border: 1px solid grey;
-}
-select {
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 5px;
-    width: 100px;
-    padding: 0 5px;
 }
 </style>

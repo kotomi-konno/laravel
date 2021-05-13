@@ -3,27 +3,32 @@
         <h2>活動入力画面</h2>
 
         <form @submit.prevent="actionSave">
-            <div>
-                <p>ユーザーID：{{ newaction.users_id }}</p>
-                <p>ユーザーネーム：{{ newaction.users_name }}</p>
-                日付：<input type="date" v-model="newaction.done_date"><br>
+            <div class="actionSave_contents">
+                <div class="actionSave_content">
+                    <p>▼ 日付</p>
+                    <input type="date" v-model="newaction.done_date"><br>
+                </div>
+                <!-- 日付：<input type="date" v-model="newaction.done_date" ><br> -->
 
-                取り組んだゴール：
-                <select v-model="newaction.goals_id">
-                    <option value="0">選択してください</option>
-                    <option v-for="(discomplete_goal, index) in discomplete_goals" :key="index" :value="discomplete_goal.id">{{ discomplete_goal.content }}</option>
-                </select><br>
+                <div class="actionSave_content">
+                    <p>▼ 取り組んだゴール</p>
+                    <select v-model="newaction.goals_id">
+                        <option value="0">選択してください</option>
+                        <option v-for="(discomplete_goal, index) in discomplete_goals" :key="index" :value="discomplete_goal.id">{{ discomplete_goal.content }}</option>
+                    </select><br>
+                </div>
 
-                活動時間：
-                <select v-model="newaction.done_time">
-                    <option v-for="(n, index) in 24" :key="index" :value="`${n}:00`">{{n}}:00</option>
-                </select><br>
+                <div class="actionSave_content">
+                    <p>▼ 活動時間</p>
+                    <select v-model="newaction.done_time">
+                        <option v-for="(n, index) in 24" :key="index" :value="`${n}:00`">{{n}}:00</option>
+                    </select><br>
+                </div>
             </div>
-
-            <button>入力完了</button>
+            <button class="action_btn">入力完了</button>
         </form>
 
-        <pre>{{$data.discomplete_goals}}</pre>
+        <!-- <pre>{{$data.newaction}}</pre> -->
 
     </div>
 </template>
@@ -44,6 +49,9 @@ export default {
             actions: [],
             goals: [],
             discomplete_goals: [],
+            // year: 0,
+            // month: 0,
+            // date: 0,
         };
     },
 
@@ -86,6 +94,12 @@ export default {
                 }
             });
         },
+
+        // getDate() {
+        //     this.year = this.$route.params.year;
+        //     this.month = this.$route.params.month;
+        //     this.date = this.$route.params.date;
+        // },
     },
 
     mounted() {
@@ -98,11 +112,47 @@ export default {
 
 
 <style lang="scss" scoped>
-select {
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 5px;
-    padding: 0 5px;
-    width: 100px;
+.actionSave {
+    form {
+        width: 70%;
+        margin: 0 auto;
+        .actionSave_contents {
+            margin: 30px auto;
+            .actionSave_content {
+                margin-bottom: 15px;
+                width: 100% ;
+                p{
+                    margin-bottom: 0;
+                    font-weight: bold;
+                }
+                input , select {
+                    border: 1px solid grey;
+                    border-radius: 5px;
+                    margin: 8px;
+                    padding: 3px 8px;
+                    width: 95%;
+                }
+            }
+        }
+        .action_btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin: 30px auto;
+            width: 30%;
+            padding: 8px;
+            background-color: #07889b;
+            color: #fff;
+            border: 1px solid #07889b;
+            border-bottom: solid 4px #07414f9a;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 15px;
+            &:active {
+                transform: translateY(4px);
+                border-bottom: none;
+            }
+        }
+    }
 }
 </style>

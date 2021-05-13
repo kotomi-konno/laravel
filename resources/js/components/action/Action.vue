@@ -1,7 +1,7 @@
 <template>
     <div class="actionComponent">
         <h2>活動記録</h2>
-        <router-link to="/actionsave"  class="action_btn">活動を入力する</router-link>
+        <p>入力したい日を選択し活動を記録してください。</p>
 
         <!-- ページャー -->
         <div class="pager">
@@ -30,12 +30,15 @@
                 <li v-for="(n,index) in first_cnt" :key="index+100" class="content_item blank"></li>
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main" :class='{"is_today": calendar.date == todayDate }'>
-                    <span class="content_item_d">{{ calendar.date|dateformat }}</span>
-                    <ul class="content_item_action" style="font-size: 9px;">
-                        <li v-for="(actionRecord, index) in calendar.actionRecords" :key="index">
-                            <span v-if="actionRecord.actionTime">・{{ actionRecord.actionTime }}（{{actionRecord.actionContent}}）</span>
-                        </li>
-                    </ul>
+                    <!-- <router-link :to="`/actionsave/${calendar.date}`"> -->
+                    <router-link to="/actionsave">
+                        <span class="content_item_d">{{ calendar.date|dateformat }}</span>
+                        <ul class="content_item_action" style="font-size: 9px;">
+                            <li v-for="(actionRecord, index) in calendar.actionRecords" :key="index">
+                                <span v-if="actionRecord.actionTime">・{{ actionRecord.actionTime }}（{{actionRecord.actionContent}}）</span>
+                            </li>
+                        </ul>
+                    </router-link>
                 </li>
 
                 <li v-for="(n,index) in last_cnt" :key="index" class="content_item blank"></li>
@@ -155,30 +158,34 @@ export default {
 
 <style lang="scss" scoped>
 .actionComponent {
-    .action_btn {
-        display: block;
+    p {
         text-align: center;
-        text-decoration: none;
-        margin: 30px auto;
-        width: 25%;
-        padding: 8px;
-        background-color: #07889b;
-        color: #fff;
-        border-bottom: solid 4px #07414f9a;
-        border-radius: 5px;
-        font-weight: bold;
-        font-size: 15px;
-        &:active {
-            transform: translateY(4px);
-            border-bottom: none;
-        }
+        color: red;
     }
+    // .action_btn {
+    //     display: block;
+    //     text-align: center;
+    //     text-decoration: none;
+    //     margin: 30px auto;
+    //     width: 25%;
+    //     padding: 8px;
+    //     background-color: #07889b;
+    //     color: #fff;
+    //     border-bottom: solid 4px #07414f9a;
+    //     border-radius: 5px;
+    //     font-weight: bold;
+    //     font-size: 15px;
+    //     &:active {
+    //         transform: translateY(4px);
+    //         border-bottom: none;
+    //     }
+    // }
     .pager {
         display: flex;
         justify-content: center;
         align-items: center;
         margin: 30px 0 20px 0;
-        h3{
+        h3 {
             margin: 0;
         }
         a {
@@ -251,8 +258,17 @@ form {
         }
         &.main {
             font-size: 13px;
-            .content_item_action li span {
-                color: black;
+            a {
+                display: block;
+                height: 100%;
+                width: 100%;
+                text-decoration: none;
+                .content_item_action li span {
+                    color: black;
+                }
+            }
+            &:hover {
+                background-color: rgba(237, 237, 237);
             }
         }
         &.blank {
@@ -260,6 +276,7 @@ form {
         }
         &.is_today {
             background-color: rgba(253, 255, 192, 0.527);
+            // background-color: rgba(255, 239, 192, 0.527);
         }
     }
 }

@@ -36,7 +36,7 @@
                 <v-pagination v-model="nowPage" :length="maxPages" @input="getNumber"></v-pagination>
             </div>
 
-            <pre>{{$data.goals}}</pre>
+            <!-- <pre>{{$data.goals}}</pre> -->
         </div>
     </div>
 </template>
@@ -135,7 +135,12 @@ export default {
             .goalpage_inner_btn button {
                 background-color: #ffc107;
                 border: none;
-                padding: 8px 18px;
+                border-bottom: solid 3px #7b68308a;
+                padding: 8px 13px;
+                &:active {
+                    transform: translateY(4px);
+                    border-bottom: none;
+                }
             }
         }
     }

@@ -2,10 +2,22 @@
     <div class="search">
         <h2>目標検索画面</h2>
         <form @submit.prevent="goalSearch">
-            ユーザー：<input v-model="search.usersName" type="text"><br>
-            内容：<input v-model="search.content" type="text"><br>
-            達成したかどうか：<input v-model="search.completed" type="checkbox"><br>
-            <button>search</button>
+            <div class="search_contents">
+                <div class="search_content">
+                    <p>▼ ユーザー</p>
+                    <input v-model="search.usersName" type="text"><br>
+                </div>
+                <div class="search_content">
+                    <p>▼ 内容</p>
+                    <input v-model="search.content" type="text"><br>
+                </div>
+                <div class="search_content">
+                    <p>▼ 達成したかどうか</p>
+                    <input class="search_content_checkbox" v-model="search.completed" type="checkbox"><br>
+                </div>
+            </div>
+
+            <button class="search_btn">検索する</button>
         </form>
 
         <hr>
@@ -68,14 +80,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
 li {
     list-style: none;
     margin-bottom: 15px;
 }
-.red {
-    color: red;
-}
+// .red {
+//     color: red;
+// }
 .pagination {
     max-width: 500px;
     margin: 20px auto;
@@ -102,6 +113,60 @@ li {
             &--disabled {
                 opacity: 0.2;
             }
+        }
+    }
+}
+
+.search {
+    form {
+        width: 70%;
+        margin: 0 auto;
+        .search_contents {
+            margin: 30px auto;
+            .search_content {
+                margin-bottom: 15px;
+                width: 100%;
+                &_checkbox {
+                    display: block;
+                    text-align: left;
+                }
+                p {
+                    margin-bottom: 0;
+                    font-weight: bold;
+                }
+                input,
+                select {
+                    border: 1px solid grey;
+                    border-radius: 5px;
+                    margin: 8px;
+                    padding: 3px 8px;
+                    width: 95%;
+                }
+            }
+        }
+        .search_btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin: 30px auto;
+            width: 30%;
+            padding: 8px;
+            background-color: #07889b;
+            color: #fff;
+            border: 1px solid #07889b;
+            border-bottom: solid 4px #07414f9a;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 15px;
+            &:active {
+                transform: translateY(4px);
+                border-bottom: none;
+            }
+        }
+    }
+    ul li {
+        .red {
+            color: red;
         }
     }
 }

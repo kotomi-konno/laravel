@@ -49,6 +49,11 @@ const router = new VueRouter({
             path: '/',
             redirect: `/action/${new Date().getFullYear()}/${new Date().getMonth() + 1}`,
         },
+        // {
+        //     path: '/actionsave/:calendar.date',
+        //     name: 'actionsave',
+        //     component: () => import('./components/action/Actionsave.vue'),
+        // },
         {
             path: '/actionsave',
             name: 'actionsave',
