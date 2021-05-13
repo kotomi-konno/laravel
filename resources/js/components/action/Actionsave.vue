@@ -7,8 +7,8 @@
                 <div class="actionSave_content">
                     <p>▼ 日付</p>
                     <input type="date" v-model="newaction.done_date"><br>
+                    <div v-show="newaction.error_done_date" class="error">日付を選択してください</div>
                 </div>
-                <!-- 日付：<input type="date" v-model="newaction.done_date" ><br> -->
 
                 <div class="actionSave_content">
                     <p>▼ 取り組んだゴール</p>
@@ -16,18 +16,20 @@
                         <option value="0">選択してください</option>
                         <option v-for="(discomplete_goal, index) in discomplete_goals" :key="index" :value="discomplete_goal.id">{{ discomplete_goal.content }}</option>
                     </select><br>
+                    <div v-show="newaction.error_goals_id" class="error">ゴールを選択してください</div>
                 </div>
 
                 <div class="actionSave_content">
                     <p>▼ 活動時間</p>
                     <select v-model="newaction.done_time">
+                        <option value="0">選択してください</option>
                         <option v-for="(n, index) in 24" :key="index" :value="`${n}:00`">{{n}}:00</option>
                     </select><br>
+                    <div v-show="newaction.error_done_time" class="error">活動時間を選択してください</div>
                 </div>
             </div>
             <button class="action_btn">入力完了</button>
         </form>
-
 
     </div>
 </template>
@@ -42,8 +44,12 @@ export default {
             newaction: {
                 done_date: "",
                 done_time: "",
-                users_id: 0,
                 goals_id: 0,
+                users_id: 0,
+                // ↓検証用
+                error_done_date: false,
+                error_done_time: false,
+                error_goals_id: false,
             },
             actions: [],
             goals: [],
@@ -53,7 +59,23 @@ export default {
 
     methods: {
         actionSave() {
-            if (this.newaction.done_time != "") {
+            this.newaction.error_done_date = false;
+            this.newaction.error_goals_id = false;
+            this.newaction.error_done_time = false;
+            if (this.newaction.done_date == "") {
+                this.newaction.error_done_date = true;
+            }
+            if (this.newaction.goals_id == 0) {
+                this.newaction.error_goals_id = true;
+            }
+            if (this.newaction.done_time == "") {
+                this.newaction.error_done_time = true;
+            }
+            if (
+                this.newaction.done_date != "" &&
+                this.newaction.goals_id != 0 &&
+                this.newaction.done_time != ""
+            ) {
                 axios.post("/api/action/save", this.newaction).then((res) => {
                     this.newaction.done_date = "";
                     this.newaction.done_time = "";
@@ -75,7 +97,6 @@ export default {
                 this.newaction.users_name = res.data.name;
             });
         },
-
         // 未達成のゴールで、自分が作成したゴールだけを表示させる
         getDiscompleteGoal() {
             axios.get("/api/goal/read").then((res) => {
@@ -90,12 +111,11 @@ export default {
                 }
             });
         },
-
         getSelectDate() {
             this.newaction.done_date = this.$route.params.selectDate;
         },
     },
-    watch :{
+    watch: {
         $route: "getSelectDate",
     },
 
@@ -118,17 +138,21 @@ export default {
             margin: 30px auto;
             .actionSave_content {
                 margin-bottom: 15px;
-                width: 100% ;
-                p{
+                width: 100%;
+                p {
                     margin-bottom: 0;
                     font-weight: bold;
                 }
-                input , select {
+                input,
+                select {
                     border: 1px solid grey;
                     border-radius: 5px;
                     margin: 8px;
                     padding: 3px 8px;
                     width: 95%;
+                }
+                .error {
+                    color: red;
                 }
             }
         }

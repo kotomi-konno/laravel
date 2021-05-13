@@ -8,11 +8,13 @@
                 <div class="goalCreate_content">
                     <p>▼ 取り組む内容</p>
                     <input type="text" v-model="newgoal.content"><br>
+                    <div v-show="newgoal.error_content" class="error">内容を入力してください</div>
                 </div>
 
                 <div class="goalCreate_content">
                     <p>▼ 締切日</p>
                     <input type="date" v-model="newgoal.deadline"><br>
+                    <div v-show="newgoal.error_deadline" class="error">締切日を入力してください</div>
                 </div>
 
                 <div class="goalCreate_content">
@@ -20,6 +22,7 @@
                     <select v-model="newgoal.time">
                         <option v-for="(n, index) in 60" :key="index" :value="`${n}:00`">{{n}}:00</option>
                     </select><br>
+                    <div v-show="newgoal.error_time" class="error">目標時間を入力してください</div>
                 </div>
 
             </div>
@@ -42,14 +45,31 @@ export default {
                 deadline: "",
                 time: "",
                 completed: false,
+                // 検証用
+                error_content: false,
+                error_deadline: false,
+                error_time: false,
             },
             goals: [],
-            // user: {},
+            
         };
     },
     methods: {
         goalCreate() {
-            if (this.newgoal.content != "") {
+            this.newgoal.error_content = false;
+            this.newgoal.error_deadline = false;
+            this.newgoal.error_time = false;
+            if(this.newgoal.content == ""){
+                this.newgoal.error_content = true;
+            }
+            if(this.newgoal.deadline == ""){
+                this.newgoal.error_deadline = true;
+            }
+            if(this.newgoal.time == ""){
+                this.newgoal.error_time = true;
+            }
+
+            if (this.newgoal.content != "" && this.newgoal.deadline != "" && this.newgoal.time != "") {
                 axios.post("/api/goal/create", this.newgoal).then((res) => {
                     this.newgoal.content = "";
                     this.newgoal.deadline = "";
@@ -110,6 +130,9 @@ export default {
                     margin: 8px;
                     padding: 3px 8px;
                     width: 95%;
+                }
+                .error{
+                    color: red;
                 }
             }
         }
