@@ -26,7 +26,7 @@
 
         <ul>
             <li v-for="(goal, index) in goals" :key="index">
-                ユーザー名：<span>{{goal.users_name}}（ID：{{goal.users_id}}）</span><br>
+                ユーザー名：<span>{{goal.name}}（ID：{{goal.users_id}}）</span><br>
                 <!-- ユーザー名：<span>{{goal.users_id}}</span><br> -->
                 内容：<span :class="{red:goal.completed}">{{goal.content}}</span><br>
                 達成したかどうか：<input type="checkbox" v-model="goal.completed" disabled='disabled'><br>
@@ -34,7 +34,7 @@
         </ul>
 
         <div v-show="isShow" class="pagination">
-            <v-pagination v-model="nowPage" :length="maxPages" @input="getNumber"></v-pagination>
+            <v-pagination v-model="nowPage" :length="pageCount" @input="getNumber"></v-pagination>
         </div>
 
     </div>
@@ -46,13 +46,12 @@ export default {
         return {
             isShow: false,
             nowPage: 1,
-            maxPages: 0,
+            pageCount: 0,
             itemsNum: 1,
-            maxItems: 5,
+            displayDataCount: 5,
             goalDatas: [],
             search: {
                 users_name: "",
-                users_id: "",
                 content: "",
                 completed: false,
             },
@@ -60,31 +59,31 @@ export default {
         };
     },
     methods: {
-        // getUsersId(){
-
-        // }
         goalSearch() {
             axios.post("/api/goal/search", this.search).then((res) => {
                 this.goalDatas = res.data;
-                console.log(this.goalDatas);
+                console.log(res.data);
                 this.getNumber(1);
                 this.isShow = true;
             });
         },
-        getNumber(page) {
-            let maxNum = this.goalDatas.length;
-            this.maxPages = Math.ceil(maxNum / this.maxItems);
-            this.goals.splice(0, this.goals.length);
-            for (let i = 0; i < this.maxItems; i++) {
-                if (i + this.maxItems * (page - 1) < maxNum - 1) {
+        getNumber(nowPage) {
+            let dataCount = this.goalDatas.length;//検索結果データ数 ex)13
+            this.pageCount = Math.ceil(dataCount / this.displayDataCount);//ページ数 ex)3 （1ページに表示されるのが5件だから）
+            this.goals.splice(0, this.goals.length);//表示されているデータのリセット
+            for (let i = 0; i < this.displayDataCount; i++) {
+                let firstIndex = this.displayDataCount * (nowPage - 1);//そのページの最初のデータのインデックス
+                if (firstIndex + i < dataCount) {
                     this.goals.push(
-                        this.goalDatas[i + this.maxItems * (page - 1)]
+                        this.goalDatas[firstIndex + i]
                     );
                 }
             }
         },
     },
-    mounted() {},
+    mounted(){
+
+    }
 };
 </script>
 <style lang="scss" scoped>
@@ -92,9 +91,6 @@ li {
     list-style: none;
     margin-bottom: 15px;
 }
-// .red {
-//     color: red;
-// }
 .pagination {
     max-width: 500px;
     margin: 20px auto;

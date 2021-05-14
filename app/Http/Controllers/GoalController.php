@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Goal;
 use App\User;
@@ -53,39 +54,25 @@ class GoalController extends Controller
 
 // ここから検索機能
 
-    // public function search(Request $request)
-    // {
-    //     $query = Goal::query()->orderBy('id', 'desc');
-
-    //     $query->where('completed','=', $request->completed);
-    //     if(isset($request->content)){
-    //         $query->where('content','like', "%".$request->content."%");
-    //     }
-
-    //     $data = $query->get();
-    //     return $data;
-    // }
-
     public function search(Request $request){
-        // ゴールの全てのデータを取得
-        $querys = Goal::query()->orderBy('id', 'desc'); 
-        // リレーション
-        foreach($querys as $query){
-            $query->users_name = User::find($query->users_id)->name;
-        }
 
-        // // contentの検索
-        if( $request["content"] != "" ){
+        $querys = Goal::select('users.name', 'goals.*')
+        ->leftJoin('users', 'users.id', '=', 'goals.users_id');
+
+        // users_nameの検索
+        if( $request->users_name != "" ){
+            $querys->where('name','like', '%'.$request->users_name.'%' );
+        }
+        // contentの検索
+        if( $request->content != "" ){
             $querys->where('content','like', "%".$request->content."%");
         }
-        // // completedの検索
+        // completedの検索
         if($request->completed == true){
             $querys->where('completed','=', 1);
         }else{
             $querys->where('completed','=', 0);
         }
-        // users_idの検索
-
 
 
         $data = $querys->get();

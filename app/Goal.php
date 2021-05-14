@@ -9,6 +9,7 @@ class Goal extends Model
 
    protected $fillable = [
            'users_id',
+        //    'users_name',
            'content',
            'deadline',
            'time',
