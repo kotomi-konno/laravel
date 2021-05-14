@@ -1,11 +1,11 @@
 <template>
     <div class="search">
-        <h2>目標検索画面</h2>
+        <h2>目標検索</h2>
         <form @submit.prevent="goalSearch">
             <div class="search_contents">
                 <div class="search_content">
-                    <p>▼ ユーザー</p>
-                    <input v-model="search.usersName" type="text"><br>
+                    <p>▼ ユーザー名</p>
+                    <input v-model="search.users_name" type="text"><br>
                 </div>
                 <div class="search_content">
                     <p>▼ 内容</p>
@@ -20,10 +20,14 @@
             <button class="search_btn">検索する</button>
         </form>
 
+        <pre>{{$data}}</pre>
+
         <hr>
+
         <ul>
             <li v-for="(goal, index) in goals" :key="index">
-                ユーザー：<span>{{goal.users_id}}</span><br>
+                ユーザー名：<span>{{goal.users_name}}（ID：{{goal.users_id}}）</span><br>
+                <!-- ユーザー名：<span>{{goal.users_id}}</span><br> -->
                 内容：<span :class="{red:goal.completed}">{{goal.content}}</span><br>
                 達成したかどうか：<input type="checkbox" v-model="goal.completed" disabled='disabled'><br>
             </li>
@@ -47,7 +51,8 @@ export default {
             maxItems: 5,
             goalDatas: [],
             search: {
-                usersName: "",
+                users_name: "",
+                users_id: "",
                 content: "",
                 completed: false,
             },
@@ -55,6 +60,9 @@ export default {
         };
     },
     methods: {
+        // getUsersId(){
+
+        // }
         goalSearch() {
             axios.post("/api/goal/search", this.search).then((res) => {
                 this.goalDatas = res.data;

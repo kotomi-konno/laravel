@@ -11,12 +11,12 @@
                 </div>
 
                 <div class="actionSave_content">
-                    <p>▼ 取り組んだゴール</p>
+                    <p>▼ 取り組んだ目標</p>
                     <select v-model="newaction.goals_id">
                         <option value="0">選択してください</option>
                         <option v-for="(discomplete_goal, index) in discomplete_goals" :key="index" :value="discomplete_goal.id">{{ discomplete_goal.content }}</option>
                     </select><br>
-                    <div v-show="newaction.error_goals_id" class="error">ゴールを選択してください</div>
+                    <div v-show="newaction.error_goals_id" class="error">目標を選択してください</div>
                 </div>
 
                 <div class="actionSave_content">

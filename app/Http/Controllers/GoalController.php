@@ -51,17 +51,45 @@ class GoalController extends Controller
         Goal::where("id", $id)->delete();
     }
 
+// ここから検索機能
 
-    public function search(Request $request)
-    {
-        $query = Goal::query()->orderBy('id', 'desc');
+    // public function search(Request $request)
+    // {
+    //     $query = Goal::query()->orderBy('id', 'desc');
 
-        $query->where('completed','=', $request->completed);
-        if(isset($request->content)){
-            $query->where('content','like', "%".$request->content."%");
+    //     $query->where('completed','=', $request->completed);
+    //     if(isset($request->content)){
+    //         $query->where('content','like', "%".$request->content."%");
+    //     }
+
+    //     $data = $query->get();
+    //     return $data;
+    // }
+
+    public function search(Request $request){
+        // ゴールの全てのデータを取得
+        $querys = Goal::query()->orderBy('id', 'desc'); 
+        // リレーション
+        foreach($querys as $query){
+            $query->users_name = User::find($query->users_id)->name;
         }
 
-        $data = $query->get();
+        // // contentの検索
+        if( $request["content"] != "" ){
+            $querys->where('content','like', "%".$request->content."%");
+        }
+        // // completedの検索
+        if($request->completed == true){
+            $querys->where('completed','=', 1);
+        }else{
+            $querys->where('completed','=', 0);
+        }
+        // users_idの検索
+
+
+
+        $data = $querys->get();
         return $data;
+    
     }
 }
