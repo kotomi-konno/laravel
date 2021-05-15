@@ -9,7 +9,7 @@
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
                     <div class="goalpage_inner_main">
-                        ユーザー：<span>{{ goal.users_name }}（ID：{{goal.users_id}}）</span><br>
+                        <!-- ユーザー：<span>{{ goal.users_name }}（ID：{{goal.users_id}}）</span><br> -->
                         内容：<span v-if="!goal.edit">{{ goal.content }}</span>
                         <input v-if="goal.edit" v-model="goal.content" type="text"><br>
 
@@ -33,10 +33,12 @@
                 </li>
             </ul>
             <div v-show="isShow" class="pagination">
-                <v-pagination v-model="nowPage" :length="maxPages" @input="getNumber"></v-pagination>
+                <v-pagination v-model="nowPage" :length="pagesCount" @input="getNumber"></v-pagination>
             </div>
 
-            <!-- <pre>{{$data.goals}}</pre> -->
+            <!-- <pre>{{$data.goals}}</pre>
+            <pre>{{$data.myGoalDatas}}</pre> -->
+
         </div>
     </div>
 </template>
@@ -47,38 +49,57 @@ export default {
         return {
             isShow: false,
             nowPage: 1,
-            maxPages: 0,
-            itemsNum: 1,
-            maxItems: 5,
-            goalDatas: [],
+            pagesCount: 0,
+            // itemsNum: 1,
+            displayDataCount: 5,
+            user: {},
 
-            goals: [],
+            goalDatas: [], // ゴールデータ全て
+            myGoalDatas: [],// ログインユーザーのゴールデータ全て
+            goals: [],// 今のページに表示されているデータ（1ページ5件なら5個あるはず）
         };
     },
     methods: {
         goalRead() {
             axios.get("/api/goal/read").then((res) => {
-                // this.goals = res.data;
                 this.goalDatas = res.data;
-                this.getNumber(1);
                 this.isShow = true;
+                for (let i = 0; i < this.goalDatas.length; i++) {
+                    if (this.goalDatas[i].users_id == this.user.id) {
+                        this.myGoalDatas.push(this.goalDatas[i]);
+                    }
+                }
+                this.getNumber(1);
 
                 this.goals.forEach((goal) => {
                     this.$set(goal, "edit", false);
                 });
             });
         },
-        getNumber(page) {
-            let maxNum = this.goalDatas.length;
-            this.maxPages = Math.ceil(maxNum / this.maxItems);
-            this.goals.splice(0, this.goals.length);
-            for (let i = 0; i < this.maxItems; i++) {
-                if (i + this.maxItems * (page - 1) < maxNum - 1) {
+        getNumber(nowPage) {
+            let dataCount = this.myGoalDatas.length;//表示する全データ数
+            console.log(this.myGoalDatas.length);
+            this.pagesCount = Math.ceil(dataCount / this.displayDataCount);//総ページ数
+            this.goals.splice(0, this.goals.length);//表示されているgoalsデータのリセット
+            for (let i = 0; i < this.displayDataCount; i++) {
+                let firstIndex = this.displayDataCount * (nowPage - 1);//そのページの最初のデータのインデックス
+                if (i + firstIndex < dataCount) {
                     this.goals.push(
-                        this.goalDatas[i + this.maxItems * (page - 1)]
+                        this.myGoalDatas[ firstIndex + i ]
                     );
                 }
             }
+
+            // let dataCount = this.goalDatas.length;
+            // this.pagesCount = Math.ceil(dataCount / this.displayDataCount);
+            // this.goals.splice(0, this.goals.length);
+            // for (let i = 0; i < this.displayDataCount; i++) {
+            //     if (i + this.displayDataCount * (page - 1) < dataCount - 1) {
+            //         this.goals.push(
+            //             this.goalDatas[i + this.displayDataCount * (page - 1)]
+            //         );
+            //     }
+            // }
         },
         goalUpdate(index) {
             this.goals[index].edit = false;
@@ -93,8 +114,14 @@ export default {
                 });
             }
         },
+        getLoginUser() {
+            axios.get("/api/loginuser").then((res) => {
+                this.user = res.data;
+            });
+        },
     },
     mounted() {
+        this.getLoginUser();
         this.goalRead();
     },
 };

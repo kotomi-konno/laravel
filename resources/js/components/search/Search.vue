@@ -20,10 +20,11 @@
             <button class="search_btn">検索する</button>
         </form>
 
-        <pre>{{$data}}</pre>
+        <!-- <pre>{{$data}}</pre> -->
 
         <hr>
 
+        <h3 v-show="goals!= ''">検索結果</h3>
         <ul>
             <li v-for="(goal, index) in goals" :key="index">
                 ユーザー名：<span>{{goal.name}}（ID：{{goal.users_id}}）</span><br>
@@ -122,11 +123,13 @@ li {
 }
 
 .search {
+    width: 70%;
+    margin: 0 auto;
     form {
-        width: 70%;
+        width: 80%;
         margin: 0 auto;
         .search_contents {
-            margin: 30px auto;
+            // margin: 30px auto;
             .search_content {
                 margin-bottom: 15px;
                 width: 100%;
@@ -168,9 +171,17 @@ li {
             }
         }
     }
-    ul li {
-        .red {
-            color: red;
+    h3{
+        text-align: center;
+    }
+    ul {
+        width: 80%;margin: 0 auto;
+        text-align: center;
+
+            li{
+            .red {
+                color: red;
+            }
         }
     }
 }
