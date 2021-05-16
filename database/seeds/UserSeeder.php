@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         User::create([
             // 開発中は、初期ログインのためにこの表記を入れておく
             'name' => 'kotomi',
-            'email' => 'kotomi.okawa@gmail.com',
+            'email' => 'test@gmail.com',
             'password' => \Hash::make('test1234'),
             'level' => '2',
         ]);
