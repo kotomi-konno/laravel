@@ -1,18 +1,19 @@
 <template>
     <div class="search">
         <h2>目標検索</h2>
+        <p >自分の目標だけでなく、他のユーザーの目標検索ができます。</p>
         <form @submit.prevent="goalSearch">
             <div class="search_contents">
                 <div class="search_content">
-                    <p>▼ ユーザー名</p>
+                    <dt>▼ ユーザー名</dt>
                     <input v-model="search.users_name" type="text"><br>
                 </div>
                 <div class="search_content">
-                    <p>▼ 内容</p>
+                    <dt>▼ 内容</dt>
                     <input v-model="search.content" type="text"><br>
                 </div>
                 <div class="search_content">
-                    <p>▼ 達成したかどうか</p>
+                    <dt>▼ 達成したかどうか</dt>
                     <input class="search_content_checkbox" v-model="search.completed" type="checkbox"><br>
                 </div>
             </div>
@@ -20,15 +21,12 @@
             <button class="search_btn">検索する</button>
         </form>
 
-        <!-- <pre>{{$data}}</pre> -->
-
         <hr>
 
         <h3 v-show="goals!= ''">検索結果</h3>
         <ul>
             <li v-for="(goal, index) in goals" :key="index">
                 ユーザー名：<span>{{goal.name}}（ID：{{goal.users_id}}）</span><br>
-                <!-- ユーザー名：<span>{{goal.users_id}}</span><br> -->
                 内容：<span :class="{red:goal.completed}">{{goal.content}}</span><br>
                 達成したかどうか：<input type="checkbox" v-model="goal.completed" disabled='disabled'><br>
             </li>
@@ -125,11 +123,14 @@ li {
 .search {
     width: 70%;
     margin: 0 auto;
+    p{
+        color: red;
+        text-align: center;
+    }
     form {
         width: 80%;
         margin: 0 auto;
         .search_contents {
-            // margin: 30px auto;
             .search_content {
                 margin-bottom: 15px;
                 width: 100%;
@@ -137,7 +138,7 @@ li {
                     display: block;
                     text-align: left;
                 }
-                p {
+                dt {
                     margin-bottom: 0;
                     font-weight: bold;
                 }
@@ -175,9 +176,7 @@ li {
         text-align: center;
     }
     ul {
-        width: 80%;margin: 0 auto;
-        text-align: center;
-
+        width: 70%;margin: 0 auto;
             li{
             .red {
                 color: red;

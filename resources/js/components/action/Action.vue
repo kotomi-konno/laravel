@@ -1,7 +1,7 @@
 <template>
     <div class="actionComponent">
         <h2>活動記録</h2>
-        <p>入力したい日を選択し活動を記録してください。</p>
+        <p>活動日を選択すると、登録済目標に対して活動を記録できます。</p>
 
         <!-- ページャー -->
         <div class="pager">
@@ -30,7 +30,7 @@
                 <li v-for="(n,index) in first_cnt" :key="index+100" class="content_item blank"></li>
 
                 <li v-for="calendar in calendars" :key="calendar.date" class="content_item main" :class='{"is_today": calendar.date == todayDate }'>
-                    <!-- <router-link :to="`/actionsave/${calendar.date}`"> -->
+
                     <router-link :to="`/actionsave/${calendar.date}`">
                         <span class="content_item_d"  >{{ calendar.date|dateformat }}</span>
                         <ul class="content_item_action" style="font-size: 9px;">
@@ -160,24 +160,6 @@ export default {
         text-align: center;
         color: red;
     }
-    // .action_btn {
-    //     display: block;
-    //     text-align: center;
-    //     text-decoration: none;
-    //     margin: 30px auto;
-    //     width: 25%;
-    //     padding: 8px;
-    //     background-color: #07889b;
-    //     color: #fff;
-    //     border-bottom: solid 4px #07414f9a;
-    //     border-radius: 5px;
-    //     font-weight: bold;
-    //     font-size: 15px;
-    //     &:active {
-    //         transform: translateY(4px);
-    //         border-bottom: none;
-    //     }
-    // }
     .pager {
         display: flex;
         justify-content: center;
@@ -274,7 +256,6 @@ form {
         }
         &.is_today {
             background-color: rgba(253, 255, 192, 0.527);
-            // background-color: rgba(255, 239, 192, 0.527);
         }
     }
 }

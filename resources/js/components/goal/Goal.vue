@@ -3,9 +3,11 @@
 
         <div class="goalpage_inner">
             <h2>目標</h2>
-            <router-link to="/goalcreate">目標を登録する</router-link>
+            <p>登録済の目標確認や、新しく目標を登録することができます。</p>
+            <router-link to="/goalcreate" class="goalcreateBtn">目標を登録する</router-link>
 
             <h3>目標一覧</h3>
+
             <ul>
                 <li v-for="(goal, index) in goals" :key="index">
                     <div class="goalpage_inner_main">
@@ -26,6 +28,7 @@
                     </div>
 
                     <div class="goalpage_inner_btn">
+                        <!-- <button  class="goalpage_inner_btn_records">活動履歴を見る</button><br> -->
                         <button v-if="!goal.edit" @click="goal.edit = true">編集</button>
                         <button v-if="goal.edit" @click="goalUpdate(index)">更新</button>
                         <button @click="goalDelete(goal.id)">削除</button>
@@ -35,9 +38,6 @@
             <div v-show="isShow" class="pagination">
                 <v-pagination v-model="nowPage" :length="pagesCount" @input="getNumber"></v-pagination>
             </div>
-
-            <!-- <pre>{{$data.goals}}</pre>
-            <pre>{{$data.myGoalDatas}}</pre> -->
 
         </div>
     </div>
@@ -50,8 +50,8 @@ export default {
             isShow: false,
             nowPage: 1,
             pagesCount: 0,
-            // itemsNum: 1,
-            displayDataCount: 5,
+            itemsNum: 1,
+            displayDataCount: 3,
             user: {},
 
             goalDatas: [], // ゴールデータ全て
@@ -90,16 +90,6 @@ export default {
                 }
             }
 
-            // let dataCount = this.goalDatas.length;
-            // this.pagesCount = Math.ceil(dataCount / this.displayDataCount);
-            // this.goals.splice(0, this.goals.length);
-            // for (let i = 0; i < this.displayDataCount; i++) {
-            //     if (i + this.displayDataCount * (page - 1) < dataCount - 1) {
-            //         this.goals.push(
-            //             this.goalDatas[i + this.displayDataCount * (page - 1)]
-            //         );
-            //     }
-            // }
         },
         goalUpdate(index) {
             this.goals[index].edit = false;
@@ -128,7 +118,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .goalpage_inner {
-    a {
+    text-align: center;
+    p{
+        color: red;
+    }
+    .goalcreateBtn {
         display: block;
         text-align: center;
         text-decoration: none;
@@ -149,30 +143,44 @@ export default {
     ul {
         padding: 0;
         li {
+            background-color: white;
+            border-bottom: 3px solid rgb(229, 227, 227);
+            border-radius: 10px;
+            margin: 15px 0;
             list-style: none;
             display: flex;
             justify-content: space-around;
-            padding: 15px 50px;
-            border-bottom: 1px dotted rgba(128, 128, 128, 0.552);
-            select {
-                border: 1px solid;
-                border-radius: 5px;
-                width: 100px;
+            padding: 15px 100px;
+            .goalpage_inner_main{
+                flex-basis: 50%;
+                text-align: left;
+                font-size: 15px;
+                margin: 0 auto;
             }
-            .goalpage_inner_btn button {
+            .goalpage_inner_btn {
+                flex-basis: 40%;
+                button {
                 background-color: #ffc107;
                 border: none;
                 border-bottom: solid 3px #7b68308a;
-                padding: 8px 13px;
-                &:active {
-                    transform: translateY(4px);
-                    border-bottom: none;
+                padding: 4px 13px;
+                    &:active {
+                        transform: translateY(4px);
+                        border-bottom: none;
+                    }
                 }
             }
         }
     }
     h3 {
         text-align: center;
+    }
+    select{
+        width: 30%;
+        border: 0.5px solid grey;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 12px;
     }
 }
 
