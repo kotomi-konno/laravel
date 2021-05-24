@@ -38,7 +38,7 @@
             <button class="action_btn">入力完了</button>
         </form>
 
-        <pre>{{$data.newaction}}</pre>
+        <!-- <pre>{{$data.newaction}}</pre> -->
 
     </div>
 </template>

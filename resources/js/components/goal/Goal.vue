@@ -39,7 +39,7 @@
                 <v-pagination v-model="nowPage" :length="pagesCount" @input="getNumber"></v-pagination>
             </div>
 
-            <pre>{{$data.goals}}</pre>
+            <!-- <pre>{{$data.goals}}</pre> -->
 
         </div>
     </div>
