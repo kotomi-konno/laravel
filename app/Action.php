@@ -11,6 +11,7 @@ class Action extends Model
         'done_time',
         'users_id',
         'goals_id',
+        'memo',
  ];
 
  public function user(){

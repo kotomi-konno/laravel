@@ -23,6 +23,8 @@
                                     </span>
                                 @enderror
                             </div>
+
+                            <p class="text-danger">「test@gmail.com」を入力してください。</p>
                         </div>
 
                         <div class="form-group row">
@@ -37,6 +39,8 @@
                                     </span>
                                 @enderror
                             </div>
+
+                            <p class="text-danger">「test1234」を入力してください。</p>
                         </div>
 
                         <div class="form-group row">

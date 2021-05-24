@@ -39,6 +39,8 @@
                 <v-pagination v-model="nowPage" :length="pagesCount" @input="getNumber"></v-pagination>
             </div>
 
+            <pre>{{$data.goals}}</pre>
+
         </div>
     </div>
 </template>
@@ -150,7 +152,7 @@ export default {
             list-style: none;
             display: flex;
             justify-content: space-around;
-            padding: 15px 100px;
+            padding: 15px 0;
             .goalpage_inner_main{
                 flex-basis: 50%;
                 text-align: left;

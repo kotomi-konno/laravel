@@ -147,6 +147,9 @@ export default {
         dateformat: function (date) {
             return moment(date).format("D");
         },
+        // timeformat: function (time) {
+        //     return moment(time).format("HH:mm");
+        // },
     },
 };
 </script>

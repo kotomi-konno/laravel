@@ -8,8 +8,8 @@
         </div>
 
         <div class="header_login">
-            <dt>{{user.name}}</dt>
-            <dd><a href="/logout">ログアウト</a></dd>
+            <p>{{user.name}}</p>
+            <a href="/logout">ログアウト</a>
         </div>
     </div>
 </template>
@@ -42,9 +42,9 @@ export default {
     margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
+    padding: 20px;
 }
 .header_nav {
-    padding: 25px;
     width: 70%;
 }
 .header_nav a {
@@ -52,7 +52,7 @@ export default {
     text-decoration: none;
     font-size: 30px;
     margin-right: 25px;
-    padding-bottom: 5px;
+    padding-bottom: 3px;
 }
 .header_nav a:last-child {
     margin-right: 0;
@@ -63,14 +63,14 @@ export default {
     border-bottom: 1px solid white;
 }
 .header_login{
-    padding: 10px ;
+    // padding: 10px ;
     // margin-right: 50px;
     width: 28%;
-    dt {
+    p {
         margin-bottom: 0;
-        font-size: 25px;
+        font-size: 18px;
     }
-    dd a{
+    a{
         color: #FFC107;
         font-size: 13px;
         text-decoration: none;

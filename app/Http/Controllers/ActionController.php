@@ -17,6 +17,7 @@ class ActionController extends Controller
             'done_time' => $request->done_time,
             'users_id' => $request->users_id,
             'goals_id' => $request->goals_id,
+            'memo' => $request->memo,
         ]);
     }
     

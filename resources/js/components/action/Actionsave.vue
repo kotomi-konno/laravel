@@ -27,9 +27,18 @@
                     </select><br>
                     <div v-show="newaction.error_done_time" class="error">活動時間を選択してください</div>
                 </div>
+
+                <div class="actionSave_content">
+                    <p>▼ 活動メモ</p>
+                    <!-- <input type="text" v-model="newaction.memo"><br> -->
+                    <textarea v-model="newaction.memo"  rows="5" placeholder="活動メモを入力（例：AWSデプロイが完了）"></textarea>
+                </div>
+
             </div>
             <button class="action_btn">入力完了</button>
         </form>
+
+        <pre>{{$data.newaction}}</pre>
 
     </div>
 </template>
@@ -46,6 +55,7 @@ export default {
                 done_time: "",
                 goals_id: 0,
                 users_id: 0,
+                memo: "",
                 // ↓検証用
                 error_done_date: false,
                 error_done_time: false,
@@ -80,6 +90,7 @@ export default {
                     this.newaction.done_date = "";
                     this.newaction.done_time = "";
                     this.newaction.goals_id = 0;
+                    this.newaction.memo = "";
                     this.actionRead();
                     this.$router.push("/action");
                 });
@@ -144,7 +155,8 @@ export default {
                     font-weight: bold;
                 }
                 input,
-                select {
+                select,
+                textarea {
                     border: 1px solid grey;
                     border-radius: 5px;
                     margin: 8px;

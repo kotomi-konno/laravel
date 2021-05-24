@@ -18,6 +18,7 @@ class ActionSeeder extends Seeder
                 'goals_id' => $i,
                 'done_date' => "2021-05-".$i,
                 'done_time' => '6:00:00',
+                'memo' => 'これはメモです。あなたはここに活動に関するメモを残すことができます。例えば、AWSにデプロイができた、などです。',
             ]);
         }
     }

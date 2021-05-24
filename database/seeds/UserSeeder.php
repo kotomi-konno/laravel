@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             // 開発中は、初期ログインのためにこの表記を入れておく
-            'name' => 'kotomi',
+            'name' => 'テスト太郎',
             'email' => 'test@gmail.com',
             'password' => \Hash::make('test1234'),
             'level' => '2',

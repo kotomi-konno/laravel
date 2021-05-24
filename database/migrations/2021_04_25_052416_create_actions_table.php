@@ -19,6 +19,7 @@ class CreateActionsTable extends Migration
             $table->time('done_time');
             $table->integer('users_id')->nullable();
             $table->integer('goals_id');
+            $table->string('memo')->nullable();
             $table->timestamps();
         });
     }
