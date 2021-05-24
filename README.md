@@ -1,62 +1,34 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+## 目標活動記録アプリケーション
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+目標の達成に向けて活動を記録できる簡易的なアプリケーションです。
+ユーザーは活動記録をカレンダー上で確認でき、自身の活動を定量的に客観視することができます。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 作成した目的
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+目標達成に向けて活動を継続できるようにするため、日々の活動を記録するものを作りたいと思いました。
+そのため、家計簿をカレンダーに記入するように、活動もカレンダーに記録し、直感的に使える仕様にしました。
 
-## Learning Laravel
+## 使い方
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### action(活動記録画面) 
+<img width="700" alt="スクリーンショット 2021-05-24 18 06 07" src="https://user-images.githubusercontent.com/82509334/119331039-db5dce00-bcc1-11eb-91ca-25e9271340fd.png">
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+活動日を選択すると活動入力画面に遷移し、ログインユーザーが登録した目標に対して活動を記録することができます。
+活動入力画面の"取り組んだ目標"では、ログインユーザーが登録した目標のうち、未だ未達成のものが選択できるようになっています。
+"活動日"には、選択した日付が自動で入力されるような仕様になっています。
+"活動メモ"には、活動に関するメモ（活動の詳細や、新しい発見など）を記録できます。
 
-## Laravel Sponsors
+### goal(目標画面)
+<img width="700" alt="スクリーンショット 2021-05-24 18 57 57" src="https://user-images.githubusercontent.com/82509334/119331215-14963e00-bcc2-11eb-89c3-b9e280e65635.png">
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+自身が登録した目標一覧の確認と、目標の新規登録ができます。
+登録済み目標は編集と削除ができるようになっています。
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+### search(目標検索画面)
+<img width="700" alt="スクリーンショット 2021-05-24 18 59 32" src="https://user-images.githubusercontent.com/82509334/119331358-38f21a80-bcc2-11eb-94f0-705b5cc6fbe4.png">
 
-## Contributing
+自身が登録した目標だけでなく、他のユーザーが登録した目標も検索することができます。
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# laravel_portfolio
